@@ -29,8 +29,7 @@ added without weakening the shared release gates.
   invariants that configuration cannot turn off;
 - exact-commit `git archive` packaging with one top-level directory;
 - Apache RAT verification and canonical LF-only SHA-512 output;
-- `go test ./...` inside Docker or Podman with only a disposable extracted
-  source tree mounted—the host artifact directory and credentials are absent;
+- `go test ./...` on the host from the disposable extracted source tree;
 - separate `prepare`, `sign`, and `stage` trust boundaries;
 - an external signing home under the parent workspace, never inside Git;
 - signing-key and official `KEYS` verification in an isolated public keyring;
@@ -41,14 +40,15 @@ added without weakening the shared release gates.
 ## Prerequisites
 
 - Go 1.22 or newer;
-- Git, tar, Java, GnuPG, SVN;
-- Docker or Podman for running repository code without access to host secrets.
+- Git, tar, Java, GnuPG, SVN.
 
 The release Skill includes `scripts/run.ps1` for Windows PowerShell 5.1+ and
 `scripts/run.sh` for Bash on Linux and macOS. Both invoke the same Go engine.
 
-The container engine is a security boundary. IRA intentionally has no
-"run project tests directly on the signing host" fallback.
+Docker and Podman are not required. `prepare` uses the installed Go toolchain
+and runs tests before the separate signing step. Because host tests run with the
+release manager's operating-system permissions, select and review the exact
+upstream commit before preparation.
 
 ## Expected Claude Code workspace
 
@@ -196,9 +196,10 @@ plain archive filename, and one final LF byte.
 
 The release is split into three trust domains:
 
-1. `prepare` handles untrusted repository code. Go tests run in a container
-   which receives only the extracted source tree. It cannot see release
-   artifacts, the user's home directory, GPG keyring, or ASF credentials.
+1. `prepare` clones the selected commit, builds the source archive, runs RAT,
+   and executes `go test ./...` from the disposable extracted tree using the
+   host Go toolchain. It does not invoke GPG or ASF-authenticated commands, but
+   the test process still has the current user's normal filesystem permissions.
 2. `sign` executes no repository code. It re-hashes the prepared artifact and
    requires the human to repeat that exact digest before accessing GPG. It
    explicitly uses the external `<workspace>/secretkey` home, then freezes
@@ -207,9 +208,8 @@ The release is split into three trust domains:
    `STAGE RC<n>`, refuses existing remote RC directories, avoids credential
    caching, and verifies every public file byte-for-byte.
 
-The configured Go image is restricted to the reviewed `golang:1.24` image. IRA
-records complete command output as private local evidence. Docker/Podman itself
-is privileged software and must come from a trusted installation.
+IRA records complete host test command output as private local evidence. The
+installed Go toolchain and selected upstream commit must therefore be trusted.
 
 ## Repository layout
 
