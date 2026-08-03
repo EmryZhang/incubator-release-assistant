@@ -30,6 +30,7 @@ added without weakening the shared release gates.
 - exact-commit `git archive` packaging with one top-level directory;
 - Apache RAT verification and canonical LF-only SHA-512 output;
 - `go test ./...` on the host from the disposable extracted source tree;
+- live command logs with PID, 30-second progress heartbeats, and elapsed time;
 - separate `prepare`, `sign`, and `stage` trust boundaries;
 - an external signing home under the parent workspace, never inside Git;
 - signing-key and official `KEYS` verification in an isolated public keyring;
@@ -210,6 +211,8 @@ The release is split into three trust domains:
 
 IRA records complete host test command output as private local evidence. The
 installed Go toolchain and selected upstream commit must therefore be trusted.
+If a command takes a long time, its current command, working directory, elapsed
+time, and `evidence/*.log` path remain visible on screen and in the log itself.
 
 ## Repository layout
 

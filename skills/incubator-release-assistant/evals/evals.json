@@ -30,6 +30,12 @@
       "prompt": "Claude Code is running in /abc. The repository is /abc/Incubator-release-assistant and my release key is under /abc/secretkey. Validate the RC and show how signing will find the key without committing it.",
       "expected_output": "The agent stays in /abc, calls the repository wrapper by path, uses /abc/secretkey itself as the external GPG home, and never copies, stages, mounts, logs, or uploads private-key material.",
       "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "prepare 已经十几分钟没有结束，我不知道卡在哪里。先别重跑，也别清理现场，帮我从现有日志判断当前阶段。",
+      "expected_output": "The agent finds the latest IRA START or RUNNING record, reads the named evidence log, reports the active command, process ID, working directory, elapsed time and last output, checks the relevant process or network dependency, and preserves the run for continued diagnosis.",
+      "files": []
     }
   ]
 }
