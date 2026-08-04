@@ -31,9 +31,8 @@ enforces cross-field and release-ready rules:
 - path traversal, unknown fields, alternate repositories, alternate ASF URLs,
   arbitrary commands, and unsupported adapters are rejected.
 
-Configuration contains no shell command. `go test ./...` belongs to the trusted
-adapter implementation and runs from the disposable extracted source tree with
-the installed host Go toolchain.
+Configuration contains no shell command. IRA does not execute target-project
+tests during `prepare`; confirm the exact selected commit's GitHub CI separately.
 
 ## Values humans normally change
 

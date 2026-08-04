@@ -29,7 +29,9 @@ added without weakening the shared release gates.
   invariants that configuration cannot turn off;
 - exact-commit `git archive` packaging with one top-level directory;
 - Apache RAT verification and canonical LF-only SHA-512 output;
-- `go test ./...` on the host from the disposable extracted source tree;
+- no target-project code execution during `prepare`; verify the selected
+  commit's GitHub CI separately;
+- lightweight CI for IRA's own tests, vet, formatting, wrappers, and contracts;
 - live command logs with PID, 30-second progress heartbeats, and elapsed time;
 - separate `prepare`, `sign`, and `stage` trust boundaries;
 - an external signing home under the parent workspace, never inside Git;
@@ -46,10 +48,10 @@ added without weakening the shared release gates.
 The release Skill includes `scripts/run.ps1` for Windows PowerShell 5.1+ and
 `scripts/run.sh` for Bash on Linux and macOS. Both invoke the same Go engine.
 
-Docker and Podman are not required. `prepare` uses the installed Go toolchain
-and runs tests before the separate signing step. Because host tests run with the
-release manager's operating-system permissions, select and review the exact
-upstream commit before preparation.
+Docker and Podman are not required. `prepare` does not rerun the target
+project's `go test ./...` and does not execute candidate code. Select and
+review the exact upstream commit, and separately confirm that commit's GitHub
+CI before preparation.
 
 ## Expected Claude Code workspace
 
@@ -197,10 +199,10 @@ plain archive filename, and one final LF byte.
 
 The release is split into three trust domains:
 
-1. `prepare` clones the selected commit, builds the source archive, runs RAT,
-   and executes `go test ./...` from the disposable extracted tree using the
-   host Go toolchain. It does not invoke GPG or ASF-authenticated commands, but
-   the test process still has the current user's normal filesystem permissions.
+1. `prepare` clones the selected commit, builds and inspects the source archive,
+   and runs RAT. It does not execute target-project code, invoke GPG, or use
+   ASF-authenticated commands. Confirm GitHub CI separately for the exact
+   selected commit.
 2. `sign` executes no repository code. It re-hashes the prepared artifact and
    requires the human to repeat that exact digest before accessing GPG. It
    explicitly uses the external `<workspace>/secretkey` home, then freezes

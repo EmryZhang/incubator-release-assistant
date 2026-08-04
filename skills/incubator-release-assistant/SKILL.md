@@ -62,10 +62,11 @@ Run:
 On Linux/macOS use `bash <skill-directory>/scripts/run.sh prepare --config
 <config>`.
 
-The engine builds the selected commit, runs RAT, and executes `go test ./...`
-with the host Go toolchain from the disposable extracted source tree. Docker
-and Podman are not required. A successful run prints the artifact SHA-512 and
-records resumable state under `.ira/runs/`.
+The engine archives the selected commit, checks the extracted source layout and
+required files, and runs RAT. It does not rerun the target project's
+`go test ./...` or execute candidate code; confirm the exact selected commit's
+GitHub CI separately. Docker and Podman are not required. A successful run
+prints the artifact SHA-512 and records resumable state under `.ira/runs/`.
 
 Every potentially long-running external command prints an `[IRA] START` record
 with its command, working directory, evidence-log path, and child-process PID.
