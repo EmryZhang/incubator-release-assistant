@@ -38,6 +38,10 @@ added without weakening the shared release gates.
 - signing-key and official `KEYS` verification in an isolated public keyring;
 - no-overwrite ASF dist dev staging and public byte-for-byte re-verification;
 - resumable state under ignored `.ira/runs/`;
+- an ordered release queue that reports the current repository, its next action,
+  and the next queued repository without accepting shell commands from data;
+- a registered-adapter boundary: `ira adapters` shows what IRA can actually
+  run, while unsupported queue entries remain visible and blocked;
 - a self-contained Skill containing the Go engine, schema, and Casbin template.
 
 ## Prerequisites
@@ -52,6 +56,12 @@ Docker and Podman are not required. `prepare` does not rerun the target
 project's `go test ./...` and does not execute candidate code. Select and
 review the exact upstream commit, and separately confirm that commit's GitHub
 CI before preparation.
+
+Run this command to see the currently executable release adapters:
+
+```powershell
+.\Incubator-release-assistant\ira.ps1 adapters
+```
 
 ## Expected Claude Code workspace
 
@@ -118,6 +128,38 @@ Then run:
 ./Incubator-release-assistant/ira.sh prepare \
   --config ./Incubator-release-assistant/config/local/casbin.local.json
 ```
+
+## Ordered release queue
+
+Use a queue when several repositories appear in a release tracker. IRA processes
+the queue in listed order and always prints the current repository, its next
+required action, and the next incomplete repository. It does not treat a queue
+as permission to skip the signing or staging confirmations.
+
+Copy both reviewed examples to the same ignored local directory. Keep each
+queued `releaseConfig` path relative to the queue file:
+
+```powershell
+Copy-Item .\Incubator-release-assistant\config\examples\casbin-go.json `
+  .\Incubator-release-assistant\config\local\casbin.local.json
+Copy-Item .\Incubator-release-assistant\config\examples\casbin-release-queue.json `
+  .\Incubator-release-assistant\config\local\casbin-release-queue.local.json
+```
+
+Change the first item's `releaseConfig` to `casbin.local.json`, then run:
+
+```powershell
+.\Incubator-release-assistant\ira.ps1 queue-status `
+  -Queue .\Incubator-release-assistant\config\local\casbin-release-queue.local.json
+.\Incubator-release-assistant\ira.ps1 queue-prepare `
+  -Queue .\Incubator-release-assistant\config\local\casbin-release-queue.local.json
+```
+
+`queue-prepare` runs only the current item's safe `prepare` stage. Its status
+then tells the release manager whether to sign, stage, resolve a blocker, or
+move to the next repository. A `blocked` or `manual` item stops the queue and
+must include a note. At present only `casbin-go` has an executable adapter;
+other repositories can still remain in the queue with a visible blocker.
 
 During the later `sign` command, the Bash wrapper defaults to
 `/abc/secretkey` because the caller is `/abc`. Override it only with another

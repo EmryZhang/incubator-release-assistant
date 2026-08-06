@@ -3,10 +3,12 @@
 [CmdletBinding()]
 param(
     [Parameter(Position = 0, Mandatory = $true)]
-    [ValidateSet("validate", "plan", "prepare", "sign", "stage", "verify-public", "version")]
+    [ValidateSet("validate", "plan", "prepare", "sign", "stage", "verify-public", "queue-status", "queue-prepare", "adapters", "version")]
     [string]$Command,
 
     [string]$Config,
+
+    [string]$Queue,
 
     [string]$Confirm,
 
@@ -72,6 +74,10 @@ try {
     if ($Config) {
         $configPath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($Config)
         $arguments += @("--config", $configPath)
+    }
+    if ($Queue) {
+        $queuePath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($Queue)
+        $arguments += @("--queue", $queuePath)
     }
     if ($Confirm) { $arguments += @("--confirm", $Confirm) }
     if ($Clean) { $arguments += "--clean" }
