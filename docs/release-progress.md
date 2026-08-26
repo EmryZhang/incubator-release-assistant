@@ -23,26 +23,32 @@ Last reviewed: 2026-08-26.
 
 ## Release queue
 
-| # | Project | Ecosystem | Upstream tracking context | Upstream release readiness | IRA adapter support | Next action |
-| --- | --- | --- | --- | --- | --- | --- |
-| 1 | [casbin-sqlx-adapter](https://github.com/apache/casbin-sqlx-adapter) | Rust | [PR #113](https://github.com/apache/casbin-sqlx-adapter/pull/113) (closed) | Reviewed 2026-08-26: [master 6dbb79b](https://github.com/apache/casbin-sqlx-adapter/commit/6dbb79b4904fe4b72594466fc0dacece8db56615) has passing CI and required legal files, but `Cargo.toml` and latest tag are both `v1.8.0`; no new candidate exists. | Historical adapter validation exists, but the adapter is not in this checkout. | Choose the next version and candidate commit, run its target CI, then restore and validate the Rust adapter. |
-| 2 | [casbin-jcasbin-jdbc-adapter](https://github.com/apache/casbin-jcasbin-jdbc-adapter) | Java / Maven | [PR #95](https://github.com/apache/casbin-jcasbin-jdbc-adapter/pull/95) | Pending review | Not implemented in this checkout | Research Maven and ASF RC requirements. |
-| 3 | [casbin-jcasbin](https://github.com/apache/casbin-jcasbin) | Java / Maven | [PR #525](https://github.com/apache/casbin-jcasbin/pull/525) | Pending review | Not implemented in this checkout | Research version, CI, tag, and Maven publication workflow. |
-| 4 | [casbin-pycasbin](https://github.com/apache/casbin-pycasbin) | Python / PyPI | [Issue #424](https://github.com/apache/casbin-pycasbin/issues/424) | Pending review | Not implemented in this checkout | Research PyPI/tag workflow and release policy. |
-| 5 | [casbin-typeorm-adapter](https://github.com/apache/casbin-typeorm-adapter) | TypeScript / npm | [Issue #81](https://github.com/apache/casbin-typeorm-adapter/issues/81) | Pending review | Not implemented | Research package, CI, and release workflow. |
-| 6 | [casbin-mongodb-adapter](https://github.com/apache/casbin-mongodb-adapter) | TypeScript / npm | [PR #76](https://github.com/apache/casbin-mongodb-adapter/pull/76) | Pending review | Not implemented | Research package, CI, and release workflow. |
-| 7 | [casbin-python-django-orm-adapter](https://github.com/apache/casbin-python-django-orm-adapter) | Python / PyPI | Repository | Pending review | Not implemented | Research package metadata and publication workflow. |
-| 8 | [casbin-ent-adapter](https://github.com/apache/casbin-ent-adapter) | Go | [PR #35](https://github.com/apache/casbin-ent-adapter/pull/35) | Pending review | Not implemented | Research module, CI, and tag workflow. |
-| 9 | [casbin-redis-watcher](https://github.com/apache/casbin-redis-watcher) | Go | Repository | Pending review | Not implemented | Research module, CI, and tag workflow. |
-| 10 | [casbin-lua-casbin](https://github.com/apache/casbin-lua-casbin) | Lua | [Issue #164](https://github.com/apache/casbin-lua-casbin/issues/164) | Pending review | Not implemented | Research source package and publication workflow. |
-| 11 | [casbin-core](https://github.com/apache/casbin-core) | TypeScript / npm | Repository | Pending review | Not implemented | Research package, CI, and release workflow. |
-| 12 | [casbin-casbin.js](https://github.com/apache/casbin-casbin.js) | TypeScript / npm | Repository | Pending review | Not implemented | Research package, CI, and release workflow. |
-| 13 | [casbin-python-async-sqlalchemy-adapter](https://github.com/apache/casbin-python-async-sqlalchemy-adapter) | Python / PyPI | [Issue #27](https://github.com/apache/casbin-python-async-sqlalchemy-adapter/issues/27) | Pending review | Not implemented | Research package metadata and publication workflow. |
-| 14 | [casbin-SwiftCasbin](https://github.com/apache/casbin-SwiftCasbin) | Swift | Repository | Pending review | Not implemented | Research package and release workflow. |
-| 15 | [casbin-rs](https://github.com/apache/casbin-rs) | Rust | Repository | Pending review | Not implemented | Research crate, CI, and tag workflow. |
-| 16 | [casbin-node-casbin](https://github.com/apache/casbin-node-casbin) | Node.js / TypeScript | Repository | Pending review | Not implemented | Research package, CI, and release workflow. |
-| 17 | [casbin-rust-diesel-adapter](https://github.com/apache/casbin-rust-diesel-adapter) | Rust | Repository | Pending review | Not implemented | Research crate, CI, and tag workflow. |
-| 18 | [casbin-ex](https://github.com/apache/casbin-ex) | To be determined | [Issue #31](https://github.com/apache/casbin-ex/issues/31) | Pending review | Not implemented | Identify the releasable package and its workflow. |
+The following operational fields were transcribed from the Casbin recent-repository
+tracker supplied on 2026-08-26. `Commits submitted` and `Manual release changed`
+are reported states, not proof that the changes have merged or that a project is
+ready to release. Blank source fields are recorded as **Not provided**.
+
+| # | Project | Date | Current version | Current phase | Local path | Repository update reason | Manual release? | IRA adapter support |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | [casbin](https://github.com/apache/casbin) | 2026-08-05 | `3.11.0-rc2` | Vote initiated (Yanrui); subsequently released | `D:\github_repos\casbin` | Not provided | Changed | Implemented |
+| 2 | [casbin-sqlx-adapter](https://github.com/apache/casbin-sqlx-adapter) | Not provided | Not provided | Commits submitted | `D:\github_repos\casbin-sqlx-adapter` | [PR #113](https://github.com/apache/casbin-sqlx-adapter/pull/113) | Reported changed; PR is closed, so merge status must be rechecked | Historical validation exists, not in this checkout |
+| 3 | [casbin-jcasbin-jdbc-adapter](https://github.com/apache/casbin-jcasbin-jdbc-adapter) | Not provided | Not provided | Commits submitted | `D:\github_repos\casbin-jcasbin-jdbc-adapter` | [PR #95](https://github.com/apache/casbin-jcasbin-jdbc-adapter/pull/95) | Changed | Not implemented in this checkout |
+| 4 | [casbin-jcasbin](https://github.com/apache/casbin-jcasbin) | Not provided | Not provided | Commits submitted | `D:\github_repos\casbin-jcasbin` | [PR #525](https://github.com/apache/casbin-jcasbin/pull/525) | Changed | Not implemented in this checkout |
+| 5 | [casbin-pycasbin](https://github.com/apache/casbin-pycasbin) | Not provided | Not provided | Commits submitted | `D:\github_repos\pycasbin` | [Issue #424](https://github.com/apache/casbin-pycasbin/issues/424) | Changed | Not implemented in this checkout |
+| 6 | [casbin-typeorm-adapter](https://github.com/apache/casbin-typeorm-adapter) | Not provided | Not provided | Commits submitted | `D:\github_repos\casbin-typeorm-adapter` | [Issue #81](https://github.com/apache/casbin-typeorm-adapter/issues/81) | Changed | Not implemented |
+| 7 | [casbin-mongodb-adapter](https://github.com/apache/casbin-mongodb-adapter) | Not provided | Not provided | Commits submitted | `D:\github_repos\casbin-mongodb-adapter` | [PR #76](https://github.com/apache/casbin-mongodb-adapter/pull/76) | Changed | Not implemented |
+| 8 | [casbin-python-django-orm-adapter](https://github.com/apache/casbin-python-django-orm-adapter) | Not provided | Not provided | Not provided | `D:\github_repos\casbin-python-django-orm-adapter` | Repository | Changed | Not implemented |
+| 9 | [casbin-ent-adapter](https://github.com/apache/casbin-ent-adapter) | Not provided | Not provided | Not provided | `D:\github_repos\ent-adapter` | [PR #35](https://github.com/apache/casbin-ent-adapter/pull/35) | Not provided | Not implemented |
+| 10 | [casbin-redis-watcher](https://github.com/apache/casbin-redis-watcher) | Not provided | Not provided | Commits submitted | `D:\github_repos\casbin-redis-watcher` | Repository | Not provided | Not implemented |
+| 11 | [casbin-lua-casbin](https://github.com/apache/casbin-lua-casbin) | Not provided | Not provided | Not provided | `D:\github_repos\casbin-lua-casbin` | [Issue #164](https://github.com/apache/casbin-lua-casbin/issues/164) | Changed | Not implemented |
+| 12 | [casbin-core](https://github.com/apache/casbin-core) | Not provided | Not provided | Commits submitted | `D:\github_repos\casbin-core` | Repository | Not provided | Not implemented |
+| 13 | [casbin-casbin.js](https://github.com/apache/casbin-casbin.js) | Not provided | Not provided | Commits submitted | `D:\github_repos\casbin-casbin.js` | Repository | Changed | Not implemented |
+| 14 | [casbin-python-async-sqlalchemy-adapter](https://github.com/apache/casbin-python-async-sqlalchemy-adapter) | Not provided | Not provided | Not provided | `D:\github_repos\casbin-python-async-sqlalchemy-adapter` | [Issue #27](https://github.com/apache/casbin-python-async-sqlalchemy-adapter/issues/27) | Changed | Not implemented |
+| 15 | [casbin-SwiftCasbin](https://github.com/apache/casbin-SwiftCasbin) | Not provided | Not provided | Not provided | `D:\github_repos\casbin-SwiftCasbin` | Repository | Not provided | Not implemented |
+| 16 | [casbin-rs](https://github.com/apache/casbin-rs) | Not provided | Not provided | Not provided | `D:\github_repos\casbin-rs` | Repository | Not provided | Not implemented |
+| 17 | [casbin-node-casbin](https://github.com/apache/casbin-node-casbin) | Not provided | Not provided | Not provided | `D:\github_repos\casbin-node-casbin` | Repository | Not provided | Not implemented |
+| 18 | [casbin-rust-diesel-adapter](https://github.com/apache/casbin-rust-diesel-adapter) | Not provided | Not provided | Not provided | `D:\github_repos\casbin-rust-diesel-adapter` | Repository | Not provided | Not implemented |
+| 19 | [casbin-ex](https://github.com/apache/casbin-ex) | Not provided | Not provided | Not provided | Not provided | [Issue #31](https://github.com/apache/casbin-ex/issues/31) | Not provided | Not implemented |
 
 ## Update rules
 
