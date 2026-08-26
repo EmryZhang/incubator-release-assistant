@@ -15,6 +15,9 @@ ready to release.
 
 Last reviewed: 2026-08-26.
 
+The current owner-decision questions and the copy-ready one-round message are
+maintained in [release coordination checklist](release-coordination.md).
+
 ## Completed
 
 | Project | Upstream release readiness | IRA adapter support | Release status |
