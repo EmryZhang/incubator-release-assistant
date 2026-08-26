@@ -88,6 +88,14 @@ required files, and runs RAT. It does not rerun the target project's
 GitHub CI separately. Docker and Podman are not required. A successful run
 prints the artifact SHA-512 and records resumable state under `.ira/runs/`.
 
+CI is necessary evidence, not release approval. Before signing, the release
+manager must review the RAT report for the **final source archive**, resolve
+every finding, and inspect `LICENSE`, `NOTICE`, `DISCLAIMER`, third-party
+material, and each RAT exclusion. Do not use broad exclusions merely to make
+RAT pass. Before a binding vote, an independent reviewer must unpack, build,
+and test the signed source package; this review does not authorize IRA to run
+untrusted target-project code during `prepare`.
+
 Every potentially long-running external command prints an `[IRA] START` record
 with its command, working directory, evidence-log path, and child-process PID.
 While it is still running, the engine prints an `[IRA] RUNNING` heartbeat every
@@ -161,10 +169,12 @@ After public verification succeeds, give the user a short completion summary:
 - confirmation that the public copy was verified.
 
 End with this explicit reminder: the project author must personally review the
-RAT report, every `.rat-excludes` entry, and the release's `LICENSE`, `NOTICE`,
-and `DISCLAIMER` content. An automated RAT result of zero unapproved files does
-not decide whether an exclusion or bundled third-party material is legally
-appropriate.
+RAT report for the final archive, every `.rat-excludes` entry, and the release's
+`LICENSE`, `NOTICE`, `DISCLAIMER`, and bundled third-party material. An
+automated RAT result of zero unapproved files does not decide whether an
+exclusion or bundled third-party material is legally appropriate. Before a
+binding vote, an independent reviewer must build and test the extracted signed
+source package.
 
 Voting and post-vote release work are separate follow-up tasks. Help with them
 only when the user asks; they are not part of this Skill's normal RC run.

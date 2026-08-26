@@ -47,6 +47,11 @@ title. Do not rely on an empty follow-up commit to repair a non-semantic change.
 - `prepare` must not execute target-project tests or accept project commands
   from JSON. Verify the selected commit's existing GitHub CI separately; IRA's
   own unit tests belong in this repository's lightweight CI.
+- CI is necessary evidence, never release approval. Before signing, every final
+  source archive must pass RAT with zero unexplained findings, and its
+  `LICENSE`, `NOTICE`, `DISCLAIMER`, third-party material, and every RAT
+  exclusion must receive a human legal review. A reviewer must also build and
+  test the extracted source package before casting a binding release vote.
 - `prepare` must not invoke GPG or ASF-authenticated commands. It archives and
   inspects a reviewed upstream commit without running code from that project.
 - The Agent runs from the parent workspace. Keep the checkout and secret root as

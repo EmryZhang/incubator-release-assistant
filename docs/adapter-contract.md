@@ -10,7 +10,7 @@ An adapter provides:
 - a stable adapter ID and the exact project identities it supports;
 - a short operator-facing description exposed by `ira adapters`;
 - canonical upstream and ASF distribution locations;
-- archive naming and required-file rules;
+- archive naming, required-file, and final-source-archive RAT rules;
 - typed build/test commands expressed as executable plus argument vector;
 - language-specific evidence interpretation.
 
@@ -24,8 +24,15 @@ An adapter may not:
 
 Before registration, an adapter needs tests for valid configuration, hostile
 paths, incorrect official endpoints, missing legal files, resume behavior, and
-the exact host command and working directory. At least one end-to-end test must
-use a local fixture repository without signing or network mutation.
+the exact host command and working directory. Its policy tests must prove that
+an unheaded or otherwise unrecognised file in the final source archive produces
+a RAT finding unless there is a reviewed, documented exemption. At least one
+end-to-end test must use a local fixture repository without signing or network
+mutation.
+
+Passing target-project CI is evidence for the selected commit, not a substitute
+for final-source RAT, legal review, or an independent build/test of the extracted
+candidate before a binding release vote.
 
 The current release JSON schema remains a Casbin Go schema. Registering a
 second adapter also requires the next version of the reviewed configuration

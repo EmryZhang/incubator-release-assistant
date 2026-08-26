@@ -52,6 +52,16 @@ added without weakening the shared release gates.
 The release Skill includes `scripts/run.ps1` for Windows PowerShell 5.1+ and
 `scripts/run.sh` for Bash on Linux and macOS. Both invoke the same Go engine.
 
+## Release readiness is broader than CI
+
+Passing target-project CI is necessary evidence for a selected commit; it is
+not release approval. Every RC must additionally undergo RAT on the final
+source archive, a human review of `LICENSE`, `NOTICE`, `DISCLAIMER`, third-party
+material, and each RAT exclusion, and an independent build/test of the extracted
+source package before a binding release vote. See
+[`docs/release-readiness.md`](docs/release-readiness.md) for the non-negotiable
+standard shared by every adapter.
+
 Docker and Podman are not required. `prepare` does not rerun the target
 project's `go test ./...` and does not execute candidate code. Select and
 review the exact upstream commit, and separately confirm that commit's GitHub

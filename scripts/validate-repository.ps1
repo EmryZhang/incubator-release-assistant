@@ -32,6 +32,31 @@ if ($releaseSkillText -notmatch "(?s)^---\s*\r?\nname:\s*incubator-release-assis
     throw "Release Skill frontmatter is missing or invalid"
 }
 
+$releaseReadiness = Join-Path $root "docs\release-readiness.md"
+if (-not (Test-Path -LiteralPath $releaseReadiness -PathType Leaf)) {
+    throw "Release readiness standard is missing: docs/release-readiness.md"
+}
+$releaseReadinessText = Get-Content -LiteralPath $releaseReadiness -Raw
+foreach ($requiredReadinessPattern in @(
+    "CI\s+answers whether the selected commit passed",
+    "Run Apache RAT on that final source archive",
+    "zero unexplained RAT findings",
+    "independently unpack the source archive, build it"
+)) {
+    if ($releaseReadinessText -notmatch $requiredReadinessPattern) {
+        throw "Release readiness standard is missing required rule: $requiredReadinessPattern"
+    }
+}
+foreach ($requiredSkillPattern in @(
+    [regex]::Escape("CI is necessary evidence, not release approval"),
+    [regex]::Escape("RAT report for the **final source archive**"),
+    "independent reviewer must unpack, build,\s+and test"
+)) {
+    if ($releaseSkillText -notmatch $requiredSkillPattern) {
+        throw "Release Skill is missing required release-readiness rule: $requiredSkillPattern"
+    }
+}
+
 foreach ($required in @(
     "scripts\ira\go.mod",
     "scripts\ira\cmd\ira\main.go",
