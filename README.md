@@ -136,6 +136,11 @@ the queue in listed order and always prints the current repository, its next
 required action, and the next incomplete repository. It does not treat a queue
 as permission to skip the signing or staging confirmations.
 
+The maintained [release progress table](docs/release-progress.md) records the
+upstream and IRA-adapter status for the active release queue. Keep those two
+tracks separate: an upstream issue or pull request is context, not release
+approval.
+
 Copy both reviewed examples to the same ignored local directory. Keep each
 queued `releaseConfig` path relative to the queue file:
 
