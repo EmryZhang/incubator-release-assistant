@@ -1,6 +1,24 @@
-# Incubator Release Assistant (IRA)
+# ISA / Incubator Release Assistant
 
-This repository contains two independent Agent Skills:
+**ISA is an open-source Apache release workbench that Agents can use, with a
+friendly local interface and customization.**
+
+Run `npm install` and `npm run dev`, then open the complete URL printed in the
+terminal. Requires Node.js 22.14+ and Git; Go is optional for the separate IRA
+release engine. Use `npm run build` followed by `npm start` for production.
+The [workbench guide](docs/workbench.md)
+covers project onboarding, persistent release tasks, actual Agent handoff and
+diffs, source-snapshot checks, preferences and vote/reply drafts.
+
+The workbench supports generic project/task coordination; the existing **IRA
+release engine still executes Casbin Go RC workflows only**. Workbench source
+snapshots and mail drafts are explicitly separate from signed public RCs,
+community votes and actual email delivery.
+
+## Existing RC engine and reference skills
+
+Alongside the [ISA workbench Agent bridge](skills/isa-workbench/SKILL.md), this
+repository contains two independent Agent Skills:
 
 - **Incubator Release Assistant (IRA):** a configuration-driven, cross-platform
   Apache Casbin Go RC preparation, signing, dist-dev upload, and verification
@@ -14,7 +32,7 @@ upload the archive/checksum/signature to ASF dist dev, and verify the public
 copy. Voting, final release promotion, and broader compliance programs are
 separate follow-up work rather than prerequisites for using the RC workflow.
 
-The current implementation deliberately supports **Apache Casbin Go only**.
+The current RC engine deliberately supports **Apache Casbin Go only**.
 The engine has an adapter boundary so later languages and repositories can be
 added without weakening the shared release gates.
 

@@ -7,6 +7,8 @@ config/local/
 config/**/*.local.json
 script.egg
 .ira/
+.isa/
+isa.exe
 
 # Private keys and credential stores (defence in depth; never rely on ignore alone)
 *.pem
@@ -48,6 +50,7 @@ __pycache__/
 .mypy_cache/
 .venv/
 node_modules/
+dist/
 .gocache/
 .gomodcache/
 

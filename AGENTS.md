@@ -7,6 +7,17 @@ self-contained Agent Skill. The current executable scope is Apache Casbin Go
 only. Do not claim support for another project/language until its adapter and
 contract tests exist.
 
+The local ISA workbench is a separate coordination surface in
+`src/server`, shared TypeScript models in `src/shared`, and Vite frontend in
+`web`. Start it with `npm run dev`; `npm test` builds and checks the Node
+workbench. Go is only required for the independent IRA adapter. It supports
+generic project/task/notes/mail records and source-snapshot presence checks;
+this is not executable multi-language release support. Read
+`docs/workbench.md` for the implemented scope. Preserve the Apache focus,
+Agent accessibility, friendly interface, customization and open-source
+direction. Ordinary extensions may refine implementation without changing
+these core product commitments.
+
 ## Commands
 
 ```powershell

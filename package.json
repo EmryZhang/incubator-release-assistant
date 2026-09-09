@@ -1,0 +1,30 @@
+{
+  "name": "isa-workbench",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "scripts": {
+    "dev": "tsx watch --include src/**/*.ts src/server/cli.ts serve --dev",
+    "build": "npm run typecheck && tsc -p tsconfig.build.json && vite build",
+    "start": "node dist/server/cli.js serve",
+    "isa": "tsx src/server/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run build && tsx --test tests/*.test.ts",
+    "format": "prettier --write src web tests vite.config.ts tsconfig*.json package.json"
+  },
+  "dependencies": {
+    "yauzl": "3.4.0",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.3",
+    "@types/yauzl": "3.4.0",
+    "prettier": "3.9.6",
+    "tsx": "4.23.13",
+    "typescript": "7.0.2",
+    "vite": "8.2.2"
+  }
+}

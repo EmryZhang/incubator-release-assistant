@@ -11,6 +11,21 @@ permissions:
   contents: read
 
 jobs:
+  node-workbench:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+
   lightweight-checks:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -45,7 +60,7 @@ jobs:
       - name: Check Bash wrapper syntax
         shell: bash
         working-directory: .
-        run: bash -n skills/incubator-release-assistant/scripts/run.sh ira.sh
+        run: bash -n skills/incubator-release-assistant/scripts/run.sh ira.sh isa.sh
 
       - name: Validate repository contracts
         shell: pwsh

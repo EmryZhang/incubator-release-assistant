@@ -132,4 +132,20 @@ foreach ($required in @(
     }
 }
 
-Write-Host "Repository and both Skill contracts are valid."
+$workbenchSkill = Join-Path $root "skills\isa-workbench\SKILL.md"
+$workbenchText = Get-Content -LiteralPath $workbenchSkill -Raw
+if ($workbenchText -notmatch "(?s)^---\s*\r?\nname:\s*isa-workbench\s*\r?\ndescription:\s*.+?\r?\n---") {
+    throw "Workbench Skill frontmatter is missing or invalid"
+}
+foreach ($required in @("isa.ps1", "isa.sh", "docs\workbench.md", "package.json", "package-lock.json", "src\server\cli.ts", "src\shared\model.ts", "web\index.html")) {
+    if (-not (Test-Path -LiteralPath (Join-Path $root $required) -PathType Leaf)) {
+        throw "Workbench entry point is missing: $required"
+    }
+}
+
+$nodePackage = Get-Content -LiteralPath (Join-Path $root "package.json") -Raw | ConvertFrom-Json
+foreach ($command in @("dev", "build", "start", "test", "isa")) {
+    if (-not $nodePackage.scripts.$command) { throw "Missing npm entry point: $command" }
+}
+
+Write-Host "Repository, workbench and all three Skill contracts are valid."
