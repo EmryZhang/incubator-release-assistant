@@ -1,5 +1,10 @@
 # ISA / Incubator Release Assistant
 
+For the current multi-project release preparation, start with the
+[downloadable release checklists](docs/release-checklists/README.md). Each
+snapshot includes exact commits, completed checks, pending steps, source
+patches, and tools for independent verification and continued development.
+
 **ISA is an open-source Apache release workbench that Agents can use, with a
 friendly local interface and customization.**
 

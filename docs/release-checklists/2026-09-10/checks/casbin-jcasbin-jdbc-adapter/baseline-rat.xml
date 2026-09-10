@@ -1,0 +1,70 @@
+<rat-report timestamp="2026-09-10T22:54:14+08:00">
+    <version product="Apache Creadur RAT" vendor="Apache Software Foundation" version="0.18"/>
+    <resource encoding="ISO-8859-1" mediaType="text/x-yaml" name="/.github/workflows/maven-ci.yml" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/x-yaml" name="/.github/workflows/release.yml" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/plain" name="/.gitignore" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/plain" name="/DISCLAIMER" type="NOTICE"/>
+    <resource encoding="ISO-8859-1" mediaType="text/plain" name="/LICENSE" type="NOTICE"/>
+    <resource encoding="ISO-8859-1" mediaType="text/plain" name="/NOTICE" type="NOTICE"/>
+    <resource encoding="ISO-8859-1" mediaType="text/x-web-markdown" name="/README.md" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/x-config" name="/examples/rbac_model.conf" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/csv" name="/examples/rbac_policy.csv" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/x-config" name="/examples/rbac_with_domains_model.conf" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/csv" name="/examples/rbac_with_domains_policy.csv" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="application/xml" name="/pom.xml" type="STANDARD">
+        <license approval="true" family="AL   " id="AL2.0" name="Apache License 2.0"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/x-java-source" name="/src/main/java/org/casbin/adapter/JDBCAdapter.java" type="STANDARD">
+        <license approval="true" family="AL   " id="AL2.0" name="Apache License 2.0"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/x-java-source" name="/src/main/java/org/casbin/adapter/JDBCBaseAdapter.java" type="STANDARD">
+        <license approval="true" family="AL   " id="AL2.0" name="Apache License 2.0"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/x-java-source" name="/src/main/java/org/casbin/adapter/JDBCDataSource.java" type="STANDARD">
+        <license approval="true" family="AL   " id="AL2.0" name="Apache License 2.0"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/x-java-source" name="/src/test/java/org/casbin/adapter/AdapterCreator.java" type="STANDARD">
+        <license approval="true" family="AL   " id="AL2.0" name="Apache License 2.0"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/x-java-source" name="/src/test/java/org/casbin/adapter/JDBCAdapterTest.java" type="STANDARD">
+        <license approval="true" family="AL   " id="AL2.0" name="Apache License 2.0"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/x-java-source" name="/src/test/java/org/casbin/adapter/JDBCAdapterTestSets.java" type="STANDARD">
+        <license approval="true" family="AL   " id="AL2.0" name="Apache License 2.0"/>
+    </resource>
+    <statistics>
+        <statistic approval="true" count="7" description="A count of approved licenses." name="Approved"/>
+        <statistic approval="true" count="0" description="A count of archive files." name="Archives"/>
+        <statistic approval="true" count="0" description="A count of binary files." name="Binaries"/>
+        <statistic approval="true" count="2" description="A count of distinct document types." name="Document types"/>
+        <statistic approval="true" count="0" description="A count of ignored files." name="Ignored"/>
+        <statistic approval="true" count="2" description="A count of distinct license categories." name="License categories"/>
+        <statistic approval="true" count="2" description="A count of distinct license names." name="License names"/>
+        <statistic approval="true" count="3" description="A count of notice files." name="Notices"/>
+        <statistic approval="true" count="15" description="A count of standard files." name="Standards"/>
+        <statistic approval="false" count="8" description="A count of unapproved licenses." name="Unapproved"/>
+        <statistic approval="true" count="8" description="A count of unknown file types." name="Unknown"/>
+        <licenseCategory count="8" name="?????"/>
+        <licenseCategory count="7" name="AL   "/>
+        <licenseName count="7" name="Apache License 2.0"/>
+        <licenseName count="8" name="Unknown license"/>
+        <documentType count="3" name="NOTICE"/>
+        <documentType count="15" name="STANDARD"/>
+    </statistics>
+</rat-report>

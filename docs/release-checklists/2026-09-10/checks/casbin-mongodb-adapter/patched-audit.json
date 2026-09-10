@@ -1,0 +1,10 @@
+{
+  "tree": "2cd7a377e074c1ad12c4055ed6a0380c7aec22fd",
+  "archive": "casbin-mongodb-adapter-2cd7a377e074-preflight.tar.gz",
+  "sha512": "4cdbf688bbe6203301056989948c730e74576ea17c21cd702b764b72b4b47d5c9d6cb4ff8079ad8505cb9e7d911db0c1743d98614831987407fb5f27dcb81bd7",
+  "rat": {
+    "exit": 0,
+    "unapproved": []
+  },
+  "status": "local staged-tree preflight; not a released or approved candidate"
+}

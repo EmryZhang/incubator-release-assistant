@@ -1,0 +1,9 @@
+{
+  "repo": "casbin-typeorm-adapter",
+  "commit": "065d76cd2d408d9c21b5984d09fc3b4ac4429592",
+  "archive": "casbin-typeorm-adapter-065d76cd2d40-audit.tar.gz",
+  "sha512": "21c9519ddb3c8315d5750b2163c0381eaeb6a25df06d891d819d514231458c9bace334576e3ba57ecb847103a2b90bc4af410d19919dc9531e8329dad9bf0461",
+  "rat_jar_sha512": "d77c12bfdc0cc2277bc51945a62619f3b7581bd6d6bf6ce3e029a001ff59760be0f2f2c112058d6902a7701a17c3cdd860e026d914b417639666a8a3d42fe73b",
+  "rat_exit": 1,
+  "status": "source preflight only; not an RC"
+}

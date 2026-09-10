@@ -1,0 +1,34 @@
+<rat-report timestamp="2026-09-10T23:03:04+08:00">
+    <version product="Apache Creadur RAT" vendor="Apache Software Foundation" version="0.18"/>
+    <resource encoding="ISO-8859-1" mediaType="text/plain" name="/actions.rs.txt" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/plain" name="/adapter.rs.txt" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/plain" name="/error.rs.txt" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/plain" name="/lib.rs.txt" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/plain" name="/models.rs.txt" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <statistics>
+        <statistic approval="true" count="0" description="A count of approved licenses." name="Approved"/>
+        <statistic approval="true" count="0" description="A count of archive files." name="Archives"/>
+        <statistic approval="true" count="0" description="A count of binary files." name="Binaries"/>
+        <statistic approval="true" count="1" description="A count of distinct document types." name="Document types"/>
+        <statistic approval="true" count="0" description="A count of ignored files." name="Ignored"/>
+        <statistic approval="true" count="1" description="A count of distinct license categories." name="License categories"/>
+        <statistic approval="true" count="1" description="A count of distinct license names." name="License names"/>
+        <statistic approval="true" count="0" description="A count of notice files." name="Notices"/>
+        <statistic approval="true" count="5" description="A count of standard files." name="Standards"/>
+        <statistic approval="false" count="5" description="A count of unapproved licenses." name="Unapproved"/>
+        <statistic approval="true" count="5" description="A count of unknown file types." name="Unknown"/>
+        <licenseCategory count="5" name="?????"/>
+        <licenseName count="5" name="Unknown license"/>
+        <documentType count="5" name="STANDARD"/>
+    </statistics>
+</rat-report>

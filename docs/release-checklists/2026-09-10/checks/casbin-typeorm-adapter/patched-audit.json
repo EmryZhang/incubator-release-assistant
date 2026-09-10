@@ -1,0 +1,10 @@
+{
+  "tree": "b47484cd32b5405d6cd32ed95ff27db42d6cf460",
+  "archive": "casbin-typeorm-adapter-b47484cd32b5-preflight.tar.gz",
+  "sha512": "7f62be90b2655ca1c24160bdf98539d99644f4884149c238219051a9457573d35d8f3b49ce6231a0d583535bc2bcef8b1e098b0835b359cb01aa311457585ce3",
+  "rat": {
+    "exit": 0,
+    "unapproved": []
+  },
+  "status": "local staged-tree preflight; not a released or approved candidate"
+}

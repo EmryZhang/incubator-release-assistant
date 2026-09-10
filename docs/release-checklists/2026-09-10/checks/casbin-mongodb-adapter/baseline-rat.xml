@@ -1,0 +1,61 @@
+<rat-report timestamp="2026-09-10T22:54:16+08:00">
+    <version product="Apache Creadur RAT" vendor="Apache Software Foundation" version="0.18"/>
+    <resource encoding="ISO-8859-1" mediaType="text/x-yaml" name="/.github/workflows/ci.yml" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/x-yaml" name="/.github/workflows/release.yml" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/plain" name="/.gitignore" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/x-yaml" name="/.travis.yml" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/plain" name="/DISCLAIMER" type="NOTICE"/>
+    <resource encoding="ISO-8859-1" mediaType="text/plain" name="/LICENSE" type="NOTICE"/>
+    <resource encoding="ISO-8859-1" mediaType="text/plain" name="/NOTICE" type="NOTICE"/>
+    <resource encoding="ISO-8859-1" mediaType="text/x-web-markdown" name="/README.md" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/x-go" name="/adapter.go" type="STANDARD">
+        <license approval="true" family="AL   " id="AL2.0" name="Apache License 2.0"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/x-go" name="/adapter_test.go" type="STANDARD">
+        <license approval="true" family="AL   " id="AL2.0" name="Apache License 2.0"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/x-config" name="/examples/rbac_model.conf" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/csv" name="/examples/rbac_policy.csv" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/x-config" name="/examples/rbac_tenant_service.conf" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/plain" name="/go.mod" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <resource encoding="ISO-8859-1" mediaType="text/plain" name="/go.sum" type="STANDARD">
+        <license approval="false" family="?????" id="?????" name="Unknown license"/>
+    </resource>
+    <statistics>
+        <statistic approval="true" count="2" description="A count of approved licenses." name="Approved"/>
+        <statistic approval="true" count="0" description="A count of archive files." name="Archives"/>
+        <statistic approval="true" count="0" description="A count of binary files." name="Binaries"/>
+        <statistic approval="true" count="2" description="A count of distinct document types." name="Document types"/>
+        <statistic approval="true" count="0" description="A count of ignored files." name="Ignored"/>
+        <statistic approval="true" count="2" description="A count of distinct license categories." name="License categories"/>
+        <statistic approval="true" count="2" description="A count of distinct license names." name="License names"/>
+        <statistic approval="true" count="3" description="A count of notice files." name="Notices"/>
+        <statistic approval="true" count="12" description="A count of standard files." name="Standards"/>
+        <statistic approval="false" count="10" description="A count of unapproved licenses." name="Unapproved"/>
+        <statistic approval="true" count="10" description="A count of unknown file types." name="Unknown"/>
+        <licenseCategory count="10" name="?????"/>
+        <licenseCategory count="2" name="AL   "/>
+        <licenseName count="2" name="Apache License 2.0"/>
+        <licenseName count="10" name="Unknown license"/>
+        <documentType count="3" name="NOTICE"/>
+        <documentType count="12" name="STANDARD"/>
+    </statistics>
+</rat-report>

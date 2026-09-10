@@ -1,0 +1,27 @@
+[
+  {
+    "source": "src/actions.rs",
+    "scan": "actions.rs.txt",
+    "sha512": "d033ddf709f8e6f206d019214a0382f02e9276c5805867216c0345427cd364c1e043d89a86fb170239d4d2cb659218cf3b0e1cc1580b747575a6255c49a1cf78"
+  },
+  {
+    "source": "src/adapter.rs",
+    "scan": "adapter.rs.txt",
+    "sha512": "55e40eb60757f8d9b149417c32492c04327cdf6927f6b719873f0667fad7fd543d6b63badb2117bd536f367b92576c01dc7a856f621d278b55d7296d00fd56c8"
+  },
+  {
+    "source": "src/error.rs",
+    "scan": "error.rs.txt",
+    "sha512": "f81d46d2a07d104fae76898b2bddce08acffdee6e1a3a792e78579262d9ec546a8284337570c7382c7f6f2806f334982ab306528b5300e91de3b38f24d3cdc43"
+  },
+  {
+    "source": "src/lib.rs",
+    "scan": "lib.rs.txt",
+    "sha512": "21dd1a32e8df908371ba685f1983cd5f20969b303f54b709f3c66f6f0663d5dd1728c34e41c855db34907b8695be64158d6d8c2d769990e79d5c9accbfba7b87"
+  },
+  {
+    "source": "src/models.rs",
+    "scan": "models.rs.txt",
+    "sha512": "a668d9a6127e3da26c6ecdaf405bc64913afc31e9c880a28c97b21036e3a98e57f671a1f74b38d6e4ee8ce97d4d32ef247eca985b94214bb79290959a89395fe"
+  }
+]

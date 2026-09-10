@@ -13,7 +13,12 @@ tags, GitHub releases, and registry publication remain explicit human steps.
 The linked issue or pull request is release context, not proof that a project is
 ready to release.
 
-Last reviewed: 2026-08-26.
+Historical queue review: 2026-08-26. For the 2026-09-10 checks of eight projects,
+four prepared source patches, and independent replay instructions, use the
+[published release checklists](release-checklists/2026-09-10/README.md).
+The snapshot distinguishes local patch verification from upstream merge, final
+candidate selection, vote and publication. Entries below retain their original
+tracker context unless explicitly refreshed.
 
 The current owner-decision questions and the copy-ready one-round message are
 maintained in [release coordination checklist](release-coordination.md).

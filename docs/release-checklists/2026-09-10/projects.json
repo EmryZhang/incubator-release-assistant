@@ -1,0 +1,377 @@
+{
+  "schema_version": 1,
+  "snapshot_date": "2026-09-10",
+  "scope": "Eight projects reviewed in this run; historical queue contains nineteen entries",
+  "projects": [
+    {
+      "id": "casbin-sqlx-adapter",
+      "repository": "https://github.com/apache/casbin-sqlx-adapter.git",
+      "checked_at": "2026-09-10T14:50:49.115818+00:00",
+      "base_commit": "6dbb79b4904fe4b72594466fc0dacece8db56615",
+      "observed_release": "v1.8.0",
+      "release_url": "https://github.com/apache/casbin-sqlx-adapter/releases/tag/v1.8.0",
+      "target_version": null,
+      "rc_commit": null,
+      "phase": "local_patch_verified",
+      "ci": [
+        {
+          "name": "Auto Codecov Coverage",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-sqlx-adapter/actions/runs/31075302820/job/92531921358",
+          "completed_at": "2026-08-06T05:53:51Z"
+        },
+        {
+          "name": "Auto Build CI (ubuntu-latest)",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-sqlx-adapter/actions/runs/31075302801/job/92531921356",
+          "completed_at": "2026-08-06T05:56:02Z"
+        },
+        {
+          "name": "Auto Build CI (macOS-latest)",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-sqlx-adapter/actions/runs/31075302801/job/92531920745",
+          "completed_at": "2026-08-06T05:55:32Z"
+        }
+      ],
+      "patch": "patches/casbin-sqlx-adapter.patch",
+      "patched_tree": "40836daed6e330d4f419be464a7395a95bdcc293",
+      "patch_sha256": "12f07b6b9d4e91a45d9b955ecd55ec02d61d76ec5fa99d42ba216fa5d1481ad6",
+      "patch_status": "available_in_this_bundle_not_merged_upstream",
+      "rat_status": "passed_with_listed_exclusions_pending_human_review",
+      "workflow_replay": "passed_local_fixtures",
+      "target_integration_tests": "not_rerun_locally",
+      "legal_review": "pending",
+      "dependency_compatibility_review": "pending",
+      "upstream_patch_ci": "not_run",
+      "signed_rc": "not_prepared",
+      "vote": "not_started_in_this_run",
+      "publication": "not_performed_in_this_run"
+    },
+    {
+      "id": "casbin-jcasbin-jdbc-adapter",
+      "repository": "https://github.com/apache/casbin-jcasbin-jdbc-adapter.git",
+      "checked_at": "2026-09-10T14:50:46.570051+00:00",
+      "base_commit": "989a5933e38dc9c28d58f6dfb5fe32ab37e62147",
+      "observed_release": "v2.13.0",
+      "release_url": "https://github.com/apache/casbin-jcasbin-jdbc-adapter/releases/tag/v2.13.0",
+      "target_version": null,
+      "rc_commit": null,
+      "phase": "local_patch_verified",
+      "ci": [
+        {
+          "name": "build",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-jcasbin-jdbc-adapter/actions/runs/30937684478/job/92087835586",
+          "completed_at": "2026-08-04T18:59:18Z"
+        }
+      ],
+      "patch": "patches/casbin-jcasbin-jdbc-adapter.patch",
+      "patched_tree": "bb00d2290d7e7c05ffdc6060c850c50efbd31095",
+      "patch_sha256": "83c5b57d55b2aed296d5d97b119da04232f617573cbe1094f9659585139a187f",
+      "patch_status": "available_in_this_bundle_not_merged_upstream",
+      "rat_status": "passed_with_listed_exclusions_pending_human_review",
+      "workflow_replay": "passed_local_fixtures",
+      "target_integration_tests": "not_rerun_locally",
+      "legal_review": "pending",
+      "dependency_compatibility_review": "pending",
+      "upstream_patch_ci": "not_run",
+      "signed_rc": "not_prepared",
+      "vote": "not_started_in_this_run",
+      "publication": "not_performed_in_this_run"
+    },
+    {
+      "id": "casbin-typeorm-adapter",
+      "repository": "https://github.com/apache/casbin-typeorm-adapter.git",
+      "checked_at": "2026-09-10T14:50:50.987274+00:00",
+      "base_commit": "065d76cd2d408d9c21b5984d09fc3b4ac4429592",
+      "observed_release": "v1.10.0",
+      "release_url": "https://github.com/apache/casbin-typeorm-adapter/releases/tag/v1.10.0",
+      "target_version": null,
+      "rc_commit": null,
+      "phase": "local_patch_verified",
+      "ci": [
+        {
+          "name": "coverage",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-typeorm-adapter/actions/runs/31084503706/job/92562523572",
+          "completed_at": "2026-08-06T08:33:36Z"
+        },
+        {
+          "name": "test (^20)",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-typeorm-adapter/actions/runs/31084503706/job/92562523521",
+          "completed_at": "2026-08-06T08:34:00Z"
+        },
+        {
+          "name": "lint",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-typeorm-adapter/actions/runs/31084503706/job/92560687771",
+          "completed_at": "2026-08-06T08:29:07Z"
+        }
+      ],
+      "patch": "patches/casbin-typeorm-adapter.patch",
+      "patched_tree": "b47484cd32b5405d6cd32ed95ff27db42d6cf460",
+      "patch_sha256": "a3d97ed770ce28ca7fe307287300b993b86aa064ec10f13a4ba854e1baeb3ab5",
+      "patch_status": "available_in_this_bundle_not_merged_upstream",
+      "rat_status": "passed_with_listed_exclusions_pending_human_review",
+      "workflow_replay": "passed_local_fixtures",
+      "target_integration_tests": "not_rerun_locally",
+      "legal_review": "pending",
+      "dependency_compatibility_review": "pending",
+      "upstream_patch_ci": "not_run",
+      "signed_rc": "not_prepared",
+      "vote": "not_started_in_this_run",
+      "publication": "not_performed_in_this_run"
+    },
+    {
+      "id": "casbin-mongodb-adapter",
+      "repository": "https://github.com/apache/casbin-mongodb-adapter.git",
+      "checked_at": "2026-09-10T14:50:45.203681+00:00",
+      "base_commit": "67c101979371cff80af2ce7f3094a6c5b0f2dc29",
+      "observed_release": "v4.3.0",
+      "release_url": "https://github.com/apache/casbin-mongodb-adapter/releases/tag/v4.3.0",
+      "target_version": null,
+      "rc_commit": null,
+      "phase": "local_patch_verified",
+      "ci": [
+        {
+          "name": "test",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-mongodb-adapter/actions/runs/31021582506/job/92359345949",
+          "completed_at": "2026-08-05T16:12:06Z"
+        }
+      ],
+      "patch": "patches/casbin-mongodb-adapter.patch",
+      "patched_tree": "2cd7a377e074c1ad12c4055ed6a0380c7aec22fd",
+      "patch_sha256": "9a066edc44f04fbd8536e5703d1056c1a8a01c448319565034e7449bfdd67123",
+      "patch_status": "available_in_this_bundle_not_merged_upstream",
+      "rat_status": "passed_with_listed_exclusions_pending_human_review",
+      "workflow_replay": "passed_local_fixtures",
+      "target_integration_tests": "not_rerun_locally",
+      "legal_review": "pending",
+      "dependency_compatibility_review": "pending",
+      "upstream_patch_ci": "not_run",
+      "signed_rc": "not_prepared",
+      "vote": "not_started_in_this_run",
+      "publication": "not_performed_in_this_run"
+    },
+    {
+      "id": "casbin-python-django-orm-adapter",
+      "repository": "https://github.com/apache/casbin-python-django-orm-adapter.git",
+      "checked_at": "2026-09-10T14:50:53.832995+00:00",
+      "base_commit": "d56f80d6f39fa8c033a0bd4fd475f6ade0875c30",
+      "observed_release": "v1.7.0",
+      "release_url": "https://github.com/apache/casbin-python-django-orm-adapter/releases/tag/v1.7.0",
+      "target_version": null,
+      "rc_commit": null,
+      "phase": "public_ci_screened",
+      "ci": [
+        {
+          "name": "Indicate completion to coveralls.io",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-python-django-orm-adapter/actions/runs/31079857492/job/92547866037",
+          "completed_at": "2026-08-06T07:38:10Z"
+        },
+        {
+          "name": "Run Linters",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-python-django-orm-adapter/actions/runs/31079857492/job/92545974221",
+          "completed_at": "2026-08-06T07:19:06Z"
+        },
+        {
+          "name": "test (3.10, ubuntu-latest)",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-python-django-orm-adapter/actions/runs/31079857492/job/92545973380",
+          "completed_at": "2026-08-06T07:19:13Z"
+        },
+        {
+          "name": "test (3.11, ubuntu-latest)",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-python-django-orm-adapter/actions/runs/31079857492/job/92545973175",
+          "completed_at": "2026-08-06T07:19:07Z"
+        },
+        {
+          "name": "test (3.11, windows-latest)",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-python-django-orm-adapter/actions/runs/31079857492/job/92545973158",
+          "completed_at": "2026-08-06T07:10:57Z"
+        },
+        {
+          "name": "test (3.10, macOS-latest)",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-python-django-orm-adapter/actions/runs/31079857492/job/92545973131",
+          "completed_at": "2026-08-06T07:10:32Z"
+        },
+        {
+          "name": "test (3.12, macOS-latest)",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-python-django-orm-adapter/actions/runs/31079857492/job/92545972904",
+          "completed_at": "2026-08-06T07:10:20Z"
+        },
+        {
+          "name": "test (3.10, windows-latest)",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-python-django-orm-adapter/actions/runs/31079857492/job/92545972900",
+          "completed_at": "2026-08-06T07:10:56Z"
+        },
+        {
+          "name": "test (3.12, windows-latest)",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-python-django-orm-adapter/actions/runs/31079857492/job/92545972894",
+          "completed_at": "2026-08-06T07:10:53Z"
+        },
+        {
+          "name": "test (3.12, ubuntu-latest)",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-python-django-orm-adapter/actions/runs/31079857492/job/92545972880",
+          "completed_at": "2026-08-06T07:17:39Z"
+        },
+        {
+          "name": "test (3.11, macOS-latest)",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-python-django-orm-adapter/actions/runs/31079857492/job/92545972858",
+          "completed_at": "2026-08-06T07:10:14Z"
+        }
+      ],
+      "patch": null,
+      "patched_tree": null,
+      "patch_sha256": null,
+      "patch_status": "not_prepared",
+      "rat_status": "not_run",
+      "workflow_replay": "not_run",
+      "target_integration_tests": "not_rerun_locally",
+      "legal_review": "pending",
+      "dependency_compatibility_review": "pending",
+      "upstream_patch_ci": "not_run",
+      "signed_rc": "not_prepared",
+      "vote": "not_started_in_this_run",
+      "publication": "not_performed_in_this_run"
+    },
+    {
+      "id": "casbin-ent-adapter",
+      "repository": "https://github.com/apache/casbin-ent-adapter.git",
+      "checked_at": "2026-09-10T14:50:56.748512+00:00",
+      "base_commit": "dba7bd2d8b0087a8ef5a8e98cb171b0f8241cd10",
+      "observed_release": "v1.4.0",
+      "release_url": "https://github.com/apache/casbin-ent-adapter/releases/tag/v1.4.0",
+      "target_version": null,
+      "rc_commit": null,
+      "phase": "public_ci_screened",
+      "ci": [
+        {
+          "name": "golangci",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-ent-adapter/actions/runs/31111178748/job/92649075390",
+          "completed_at": "2026-08-06T14:36:28Z"
+        },
+        {
+          "name": "test",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-ent-adapter/actions/runs/31111178195/job/92649073781",
+          "completed_at": "2026-08-06T14:37:56Z"
+        }
+      ],
+      "patch": null,
+      "patched_tree": null,
+      "patch_sha256": null,
+      "patch_status": "not_prepared",
+      "rat_status": "not_run",
+      "workflow_replay": "not_run",
+      "target_integration_tests": "not_rerun_locally",
+      "legal_review": "pending",
+      "dependency_compatibility_review": "pending",
+      "upstream_patch_ci": "not_run",
+      "signed_rc": "not_prepared",
+      "vote": "not_started_in_this_run",
+      "publication": "not_performed_in_this_run"
+    },
+    {
+      "id": "casbin-redis-watcher",
+      "repository": "https://github.com/apache/casbin-redis-watcher.git",
+      "checked_at": "2026-09-10T14:50:59.602401+00:00",
+      "base_commit": "b23b3433cd156f26081beb6c0e743ac966c094f9",
+      "observed_release": "v2.8.0",
+      "release_url": "https://github.com/apache/casbin-redis-watcher/releases/tag/v2.8.0",
+      "target_version": null,
+      "rc_commit": null,
+      "phase": "public_ci_screened",
+      "ci": [
+        {
+          "name": "golangci",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-redis-watcher/actions/runs/31106448842/job/92632746481",
+          "completed_at": "2026-08-06T13:41:14Z"
+        },
+        {
+          "name": "test (1.23)",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-redis-watcher/actions/runs/31106448144/job/92632743618",
+          "completed_at": "2026-08-06T13:40:14Z"
+        }
+      ],
+      "patch": null,
+      "patched_tree": null,
+      "patch_sha256": null,
+      "patch_status": "not_prepared",
+      "rat_status": "not_run",
+      "workflow_replay": "not_run",
+      "target_integration_tests": "not_rerun_locally",
+      "legal_review": "pending",
+      "dependency_compatibility_review": "pending",
+      "upstream_patch_ci": "not_run",
+      "signed_rc": "not_prepared",
+      "vote": "not_started_in_this_run",
+      "publication": "not_performed_in_this_run"
+    },
+    {
+      "id": "casbin-rust-diesel-adapter",
+      "repository": "https://github.com/apache/casbin-rust-diesel-adapter.git",
+      "checked_at": "2026-09-10T14:51:00.498968+00:00",
+      "base_commit": "d1c9a4e37bf3df8d6880f56c33b1354867ecf4a9",
+      "observed_release": "v1.2.0",
+      "release_url": "https://github.com/apache/casbin-rust-diesel-adapter/releases/tag/v1.2.0",
+      "target_version": null,
+      "rc_commit": null,
+      "phase": "public_ci_screened",
+      "ci": [
+        {
+          "name": "Auto Build CI (beta)",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-rust-diesel-adapter/actions/runs/32438062984/job/96643143987",
+          "completed_at": "2026-08-21T01:59:08Z"
+        },
+        {
+          "name": "Auto Build CI (nightly)",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-rust-diesel-adapter/actions/runs/32438062984/job/96643143721",
+          "completed_at": "2026-08-21T01:58:48Z"
+        },
+        {
+          "name": "Auto Build CI (stable)",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-rust-diesel-adapter/actions/runs/32438062984/job/96643143572",
+          "completed_at": "2026-08-21T01:59:07Z"
+        },
+        {
+          "name": "Auto Codecov Coverage",
+          "conclusion": "success",
+          "url": "https://github.com/apache/casbin-rust-diesel-adapter/actions/runs/32438063035/job/96643143393",
+          "completed_at": "2026-08-21T02:00:52Z"
+        }
+      ],
+      "patch": null,
+      "patched_tree": null,
+      "patch_sha256": null,
+      "patch_status": "not_prepared",
+      "rat_status": "not_run",
+      "workflow_replay": "not_run",
+      "target_integration_tests": "not_rerun_locally",
+      "legal_review": "pending",
+      "dependency_compatibility_review": "pending",
+      "upstream_patch_ci": "not_run",
+      "signed_rc": "not_prepared",
+      "vote": "not_started_in_this_run",
+      "publication": "not_performed_in_this_run"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "repo": "casbin-sqlx-adapter",
+  "commit": "6dbb79b4904fe4b72594466fc0dacece8db56615",
+  "archive": "casbin-sqlx-adapter-6dbb79b4904f-audit.tar.gz",
+  "sha512": "3f7dadb43661b3fe57c4279532d25ebc8cdc3c2a1f5bd00af4924fdd6d71b8ac0104451dbf3f2118f263dd143854443ed31b680896556b8d4648d081d82bada2",
+  "rat_jar_sha512": "d77c12bfdc0cc2277bc51945a62619f3b7581bd6d6bf6ce3e029a001ff59760be0f2f2c112058d6902a7701a17c3cdd860e026d914b417639666a8a3d42fe73b",
+  "rat_exit": 1,
+  "status": "source preflight only; not an RC"
+}

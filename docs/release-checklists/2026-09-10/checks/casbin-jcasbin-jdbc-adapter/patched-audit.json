@@ -1,0 +1,10 @@
+{
+  "tree": "bb00d2290d7e7c05ffdc6060c850c50efbd31095",
+  "archive": "casbin-jcasbin-jdbc-adapter-bb00d2290d7e-preflight.tar.gz",
+  "sha512": "0b9e4fdce2a2fcf784595f85add1074aa0b96620f9acff4108b4e98629c6b7538769184c76769efcd7782b24484296b0bf766cab876e52cc83acfd0fb35e791b",
+  "rat": {
+    "exit": 0,
+    "unapproved": []
+  },
+  "status": "local staged-tree preflight; not a released or approved candidate"
+}

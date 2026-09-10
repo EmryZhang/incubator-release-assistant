@@ -1,0 +1,9 @@
+{
+  "repo": "casbin-mongodb-adapter",
+  "commit": "67c101979371cff80af2ce7f3094a6c5b0f2dc29",
+  "archive": "casbin-mongodb-adapter-67c101979371-audit.tar.gz",
+  "sha512": "5ba797baef1d906e73bbe70eb149c2cd566d747bbe66d509c2c40aae55982095f1c381934e844038fd9ba253b14615783cbd4796cfc18dc1988686c8efbe2366",
+  "rat_jar_sha512": "d77c12bfdc0cc2277bc51945a62619f3b7581bd6d6bf6ce3e029a001ff59760be0f2f2c112058d6902a7701a17c3cdd860e026d914b417639666a8a3d42fe73b",
+  "rat_exit": 1,
+  "status": "source preflight only; not an RC"
+}

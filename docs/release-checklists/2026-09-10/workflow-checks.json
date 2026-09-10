@@ -1,0 +1,33 @@
+[
+  {
+    "repo": "casbin-sqlx-adapter",
+    "checks": [
+      "RC and final tags on the same local fixture commit produce identical SHA-512 and source file bytes"
+    ],
+    "fixture_archive_sha512": "f77d6172f38cb082165d139159c525344856df16188aab75de0c649a20519c2e62acc099c0b0f130aa130e3a0b002d0776fd223a2e81afb686f328d740187282"
+  },
+  {
+    "repo": "casbin-jcasbin-jdbc-adapter",
+    "checks": [
+      "POM mismatch rejected; committed version accepted without rewriting",
+      "RC and final tags on the same local fixture commit produce identical SHA-512 and source file bytes"
+    ],
+    "fixture_archive_sha512": "04c3574720c31135758b7d98587fd8291e7d48541f005430c6aca625adb873a3a0c8966d32a5e522339765bac07ff3ba9b4d519435ea99d4ba93dbcc76409178"
+  },
+  {
+    "repo": "casbin-typeorm-adapter",
+    "checks": [
+      "package version mismatch rejected without rewriting source",
+      "RC and final tags on the same local fixture commit produce identical SHA-512 and source file bytes",
+      "existing release is rejected; mocked gh receives only release view, no edit/upload/create"
+    ],
+    "fixture_archive_sha512": "d6776f129047140c3f9853a9b19a7481c5dbe4852b353d6626ec7fd46973d1075197311dbdbf24ada69620de594844ba4f85a375b4712dc122850159bba36c3f"
+  },
+  {
+    "repo": "casbin-mongodb-adapter",
+    "checks": [
+      "RC and final tags on the same local fixture commit produce identical SHA-512 and source file bytes"
+    ],
+    "fixture_archive_sha512": "42c0b433001a70772f546d64320028fb84e1da02334c7fd9d62cfae0b3183091533a495a98bd7ba6b6d295c46f3d557746e7f30d7ec2a756f826dbc6f68c2061"
+  }
+]

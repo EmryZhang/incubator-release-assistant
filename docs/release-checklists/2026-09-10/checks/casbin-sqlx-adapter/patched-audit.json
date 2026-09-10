@@ -1,0 +1,41 @@
+{
+  "tree": "40836daed6e330d4f419be464a7395a95bdcc293",
+  "archive": "casbin-sqlx-adapter-40836daed6e3-preflight.tar.gz",
+  "sha512": "cf6e227fc7261a293eefe6ce9de9767daf0d5e546b462b13747b985024f60c219f0f5c364ba19d5aefa33484ca0f46b8fd413ba9f2b59f366e8c3c44beae9ad5",
+  "rat": {
+    "exit": 0,
+    "unapproved": []
+  },
+  "status": "local staged-tree preflight; not a released or approved candidate",
+  "rust_mapping": [
+    {
+      "source": "src/actions.rs",
+      "scan": "actions.rs.txt",
+      "sha512": "790cbdaad58d628407a0373d3a070d3a07cf799f101f1af5e3d892b2fb38d2e6c68c4db842c31e04641236ebb86c0920b83a02a39536e0c790378c808249e466"
+    },
+    {
+      "source": "src/adapter.rs",
+      "scan": "adapter.rs.txt",
+      "sha512": "3a66876df83f92264dc9c6b440bf172249f3f9b3b3588477ea422c934c87620b3591c8ca7fd74be7834923498cdb810c930326bc53686defd6b02f33d05d3325"
+    },
+    {
+      "source": "src/error.rs",
+      "scan": "error.rs.txt",
+      "sha512": "04556aea1e9aa9ab4fbf62528768cab544af83892394dc758c40eb7ea5c9c6b6d619c2b833347f9c256c3e00157d51f5863255bb77fd0d4bc5f0ecd1e06a2e5d"
+    },
+    {
+      "source": "src/lib.rs",
+      "scan": "lib.rs.txt",
+      "sha512": "bc00e4a4a04b17632c591d467d7a0c1663099554db6896f831b55a3cd3abbee9cbb63f2323b75b54c619154126caace1e9975cbfc28ed5e41ea28f08df044b27"
+    },
+    {
+      "source": "src/models.rs",
+      "scan": "models.rs.txt",
+      "sha512": "f02aa752b48cf2188ab517944d8d992708438d94b6d96e95f2600386ced51164b1e56ad7e0e838a12371d4d198bdec4d9c5d7a56260dca71bce7ccb863a35243"
+    }
+  ],
+  "rust_rat": {
+    "exit": 0,
+    "unapproved": []
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "repo": "casbin-jcasbin-jdbc-adapter",
+  "commit": "989a5933e38dc9c28d58f6dfb5fe32ab37e62147",
+  "archive": "casbin-jcasbin-jdbc-adapter-989a5933e38d-audit.tar.gz",
+  "sha512": "e7e8a707104e2251aac964f5c708fbf4828155ae180c471fb6ed41424d51c1f14025dd6862a3cf6d291a8e0d5b983eae37c88fae92a823aadaac9d04e0409914",
+  "rat_jar_sha512": "d77c12bfdc0cc2277bc51945a62619f3b7581bd6d6bf6ce3e029a001ff59760be0f2f2c112058d6902a7701a17c3cdd860e026d914b417639666a8a3d42fe73b",
+  "rat_exit": 1,
+  "status": "source preflight only; not an RC"
+}

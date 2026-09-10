@@ -1,0 +1,197 @@
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index ee75d76..fc882aa 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -1,3 +1,15 @@
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     https://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
+ name: CI
+ 
+ on: [push, pull_request]
+diff --git a/.github/workflows/release.yml b/.github/workflows/release.yml
+index c2e09c0..b92e6c1 100644
+--- a/.github/workflows/release.yml
++++ b/.github/workflows/release.yml
+@@ -1,3 +1,15 @@
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     https://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
+ name: Release
+ 
+ # Releases are cut manually by pushing a git tag:
+@@ -42,7 +54,10 @@ jobs:
+           fi
+ 
+           VERSION="${TAG_NAME#v}"
+-          BASENAME="casbin-mongodb-adapter-${VERSION}-incubating-src"
++          VERSION="${VERSION%%-rc*}"
++          # RC and final tags at the same commit must produce identical source
++          # archive names, prefixes and bytes. RC identity belongs to the tag.
++          BASENAME="apache-casbin-mongodb-adapter-${VERSION}-incubating-src"
+ 
+           {
+             echo "tag=${TAG_NAME}"
+diff --git a/.gitignore b/.gitignore
+index ef707d2..be3a7cf 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,3 +1,15 @@
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     https://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
+ # Binaries for programs and plugins
+ *.exe
+ *.dll
+diff --git a/.rat-excludes b/.rat-excludes
+new file mode 100644
+index 0000000..2e4d0d8
+--- /dev/null
++++ b/.rat-excludes
+@@ -0,0 +1,17 @@
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     https://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++# Exact-path exceptions for source-archive RAT review. No source-code globs.
++# Small declarative policy fixture; kept unchanged for adapter tests.
++examples/rbac_policy.csv
++# Generated dependency checksums or lock data; no dependency source is bundled.
++go.sum
+diff --git a/.travis.yml b/.travis.yml
+index 65e2d13..3060b37 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -1,3 +1,15 @@
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     https://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
+ language: go
+ 
+ sudo: false
+diff --git a/README.md b/README.md
+index 2cde6df..0087240 100644
+--- a/README.md
++++ b/README.md
+@@ -1,3 +1,17 @@
++<!--
++Licensed under the Apache License, Version 2.0 (the "License");
++you may not use this file except in compliance with the License.
++You may obtain a copy of the License at
++
++    https://www.apache.org/licenses/LICENSE-2.0
++
++Unless required by applicable law or agreed to in writing, software
++distributed under the License is distributed on an "AS IS" BASIS,
++WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++See the License for the specific language governing permissions and
++limitations under the License.
++-->
++
+ MongoDB Adapter
+ ====
+ 
+diff --git a/examples/rbac_model.conf b/examples/rbac_model.conf
+index 71159e3..7f35e84 100644
+--- a/examples/rbac_model.conf
++++ b/examples/rbac_model.conf
+@@ -1,3 +1,15 @@
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     https://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
+ [request_definition]
+ r = sub, obj, act
+ 
+diff --git a/examples/rbac_tenant_service.conf b/examples/rbac_tenant_service.conf
+index 81486c4..f8a6da0 100755
+--- a/examples/rbac_tenant_service.conf
++++ b/examples/rbac_tenant_service.conf
+@@ -1,3 +1,15 @@
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     https://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
+ [request_definition]
+ r = tenant, sub, obj, act, service
+ 
+diff --git a/go.mod b/go.mod
+index 108727b..3abb66f 100644
+--- a/go.mod
++++ b/go.mod
+@@ -1,3 +1,15 @@
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at
++//
++//     https://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++// See the License for the specific language governing permissions and
++// limitations under the License.
++
+ module github.com/apache/casbin-mongodb-adapter/v4
+ 
+ go 1.20
