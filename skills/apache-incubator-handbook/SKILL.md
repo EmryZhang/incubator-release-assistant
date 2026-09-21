@@ -11,6 +11,13 @@ does not need to search the web for ordinary incubation questions.
 
 ## Route the question
 
+- For release-readiness claims, read the IRA
+  [mandatory evidence standard](references/release-readiness.md),
+  [readiness record](references/release-readiness-record.md), and
+  [preparation workflow](references/release-preparation.md). Missing or
+  unresolved evidence cannot pass. Distinguish applicable ASF obligations from
+  guidance and IRA workflow requirements; technical success is not legal or
+  vote approval.
 - Read `references/01-lifecycle-and-roles.md` for Champion, Sponsor, Mentor,
   IPMC, PPMC, committer, and podling lifecycle questions.
 - Read `references/02-governance-and-reporting.md` for mailing lists,
@@ -47,4 +54,6 @@ incubation-policy question.
    ASF legal or Incubator channel.
 
 The mechanical commit-to-RC/sign/upload/public-verify workflow belongs to the
-separate release Skill. Do not add handbook topics as executable release gates.
+separate release Skill. Required release compliance belongs in the evidence
+review; do not turn unrelated handbook topics into executable release gates
+or claim that the engine now automates legal decisions.

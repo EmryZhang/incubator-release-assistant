@@ -1,6 +1,6 @@
-# ISA local release workbench
+# IRA local release workbench
 
-ISA is an open-source Apache release project that Agents can use, with a
+IRA is an open-source Apache release project that Agents can use, with a
 friendly local interface and customization. The workbench frontend and backend
 use **Node.js / TypeScript**. The existing Go IRA engine remains an independent,
 optional release-tool adapter.
@@ -10,7 +10,7 @@ optional release-tool adapter.
 Install Node.js **22.14 or newer** (Node 24 is used in CI) and Git. A Go
 installation is not needed to start or use the workbench.
 
-From the cloned ISA repository:
+From the cloned IRA repository:
 
 ```powershell
 npm install
@@ -28,7 +28,7 @@ key or database service is needed.
 To choose a data directory and port:
 
 ```powershell
-npm run dev -- --data D:\isa-local --addr 127.0.0.1:8788
+npm run dev -- --data D:\ira-local --addr 127.0.0.1:8788
 ```
 
 For production, build once and start the compiled Node server:
@@ -37,24 +37,30 @@ For production, build once and start the compiled Node server:
 npm run build
 npm start
 # Optional arguments:
-npm start -- --data D:\isa-local --addr 127.0.0.1:8788
+npm start -- --data D:\ira-local --addr 127.0.0.1:8788
 ```
 
 The same npm commands work on macOS/Linux; supply a platform-appropriate
 absolute data path. Existing `isa.ps1` / `isa.sh` are compatibility launchers
 for the Node development server and API client.
+Use `npm run ira -- serve` or `npm run ira -- api ...` for the workbench CLI.
+`npm run isa -- ...` remains an alias for existing integrations. The separate
+`ira.ps1` / `ira.sh` entry points still invoke the Go release engine.
 
-A port can be used by one server. A data directory can be used by one ISA
+A port can be used by one server. A data directory can be used by one IRA
 instance even when ports differ. Stop the previous instance before restarting
 or switching between Go and Node. A restart rotates the local session token;
 open the newly printed URL to reconnect.
 
 ## Data compatibility
 
-The default data location remains compatible with the Go prototype:
-`%AppData%/isa` on Windows, `~/Library/Application Support/isa` on macOS, and
-`$XDG_CONFIG_HOME/isa` (or `~/.config/isa`) on Linux. Override it with
-`ISA_DATA_DIR` or `--data`.
+New installations use `%AppData%/ira` on Windows,
+`~/Library/Application Support/ira` on macOS, and `$XDG_CONFIG_HOME/ira`
+(or `~/.config/ira`) on Linux. If the new directory is absent and the sibling
+`isa` directory exists, IRA reuses that directory in place, preserving saved
+records and absolute evidence paths. If both exist, `ira` takes precedence.
+Override the location with `--data` or `IRA_DATA_DIR`; `ISA_DATA_DIR` remains
+a fallback when `IRA_DATA_DIR` is unset. Explicit `--data` has highest priority.
 
 Node reads the same schema-1 `state.json`, `notes/user.md`,
 `notes/PROJECT_ID.md`, and evidence paths. Loading old data does not rewrite it.
@@ -87,6 +93,11 @@ startup check also recognizes a reachable Go prototype sharing the directory.
    override project defaults, which override user defaults.
 7. Draft/edit votes, import plain-text review mail with optional source URL and
    threading IDs, create linked tasks, and draft/export unsent EML replies.
+8. Maintain project/component-specific preparation findings with immutable
+   update history, required closure evidence and source/settings freshness.
+   Unresolved or stale review prevents new preparation-complete progress claims.
+   See [preparation review and Agent API](readiness-workbench.md); these are
+   evidence records and structural guards, not automated legal approval.
 
 Check snapshots exclude uncommitted modifications. Changed source or selected
 check settings makes old checks stale. The normal tracked/text-file fingerprint
@@ -123,7 +134,7 @@ src/
     checks.ts                            source snapshot checks and evidence
     providers/ira.ts                     optional existing Go CLI adapter
 tests/workbench.test.ts                   integration, migration and boundaries
-skills/isa-workbench/SKILL.md             bridge to users' existing Agents
+skills/ira-workbench/SKILL.md             bridge to users' existing Agents
 skills/incubator-release-assistant/       unchanged Go IRA engine and RC Skill
 dist/                                    generated frontend and backend build
 ```
@@ -135,12 +146,17 @@ Do not add arbitrary shell-command configuration.
 
 ## Agent/API access
 
+Release intent starts a shared checklist. The overview displays completed,
+current and pending steps, evidence, the last saved time and stop/next-action
+reports. See [release progress and interruption reports](release-progress-reporting.md)
+for the Agent contract, editing, restart behavior and API examples.
+
 Use the local CLI so the Agent does not have to copy session tokens:
 
 ```powershell
-npm run isa -- api --path /api/state
-npm run isa -- api --data D:\isa-local --path '/api/packet?releaseId=ID&jobId=ID'
-npm run isa -- api --data D:\isa-local --path /api/action --body D:\report.json
+npm run ira -- api --path /api/state
+npm run ira -- api --data D:\ira-local --path '/api/packet?releaseId=ID&jobId=ID'
+npm run ira -- api --data D:\ira-local --path /api/action --body D:\report.json
 ```
 
 For production without dev dependencies, use
@@ -152,20 +168,21 @@ For production without dev dependencies, use
 | `/api/project?id=ID` | GET | Current Git snapshot and file list |
 | `/api/file?projectId=ID&path=PATH` | GET | Bounded text preview |
 | `/api/notes?projectId=ID` | GET | Notes; omit ID for user notes |
-| `/api/packet?releaseId=ID&jobId=ID` | GET | Agent task context and evidence |
+| `/api/packet?releaseId=ID&jobId=ID` | GET | Agent context and progress; omit jobId for the whole release |
+| `/api/progress?releaseId=ID` | GET | Current progress, report text, history, revision and source changes |
 | `/api/action` | POST | One validated action object |
 | `/api/draft?releaseId=ID&id=ID` | GET | Unsent EML export |
 
 Action names and fields remain compatible with the first workbench; their
 authoritative schemas are in `src/shared/model.ts`. Unknown fields and wrong
-types are rejected. See [the Agent Skill](../skills/isa-workbench/SKILL.md) for
+types are rejected. See [the Agent Skill](../skills/ira-workbench/SKILL.md) for
 the report protocol. Imported mail and notes are context, not authorization.
 
 ## Optional Go IRA adapter
 
 ```powershell
-npm run isa -- ira adapters
-npm run isa -- ira version
+npm run ira -- ira adapters
+npm run ira -- ira version
 ```
 
 The bridge exposes read-only `version`, `adapters`, `validate`, `plan` and

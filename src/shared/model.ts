@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { progressInputSchema, progressReportSchema } from "./progress.js";
+import { readinessInputSchema, readinessUpdateSchema } from "./readiness.js";
 
 const text = z.string();
 const identifier = text.regex(/^[a-f0-9]{24}$/);
@@ -102,6 +104,9 @@ export const releaseSchema = z
     checks: z.array(checkSchema),
     mails: z.array(mailSchema),
     drafts: z.array(draftSchema),
+    progressReports: z.array(progressReportSchema).optional(),
+    readinessUpdates: z.array(readinessUpdateSchema).optional(),
+    readinessInheritedFrom: identifier.optional(),
   })
   .strict();
 export const stateSchema = z
@@ -155,6 +160,8 @@ export const actionSchema = z
       "reviewJob",
       "importMail",
       "saveDraft",
+      "reportProgress",
+      "recordReadiness",
     ]),
     projectId: optionalText,
     releaseId: optionalText,
@@ -176,6 +183,12 @@ export const actionSchema = z
     signature: optionalText,
     mail: mailSchema.optional(),
     draft: draftSchema.optional(),
+    progress: progressInputSchema.optional(),
+    progressRevision: z.number().int().nonnegative().optional(),
+    readiness: readinessInputSchema.optional(),
+    readinessRevision: z.number().int().nonnegative().optional(),
+    readinessSnapshot: text.optional(),
+    readinessContext: text.optional(),
   })
   .strict();
 export type Action = z.infer<typeof actionSchema>;

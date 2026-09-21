@@ -14,9 +14,9 @@
       "id": "casbin-sqlx-adapter",
       "displayName": "Casbin SQLX adapter",
       "repository": "https://github.com/apache/casbin-sqlx-adapter.git",
-      "adapter": "go",
+      "adapter": "rust-sqlx",
       "state": "blocked",
-      "note": "Add and test a Go adapter before IRA can run this repository."
+      "note": "This is a Rust/SQLx project. Add and test its adapter before IRA can run it; current project-workflow preparation is tracked separately."
     }
   ]
 }

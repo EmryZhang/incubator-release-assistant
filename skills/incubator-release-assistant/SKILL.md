@@ -14,12 +14,48 @@ Keep the task focused on the normal release-manager path:
 4. upload the three RC files;
 5. verify the public copy.
 
-Do not expand an ordinary RC run into a general compliance, key-management,
-cross-platform, or test-coverage project unless the user explicitly asks for
-that work. Report engine failures as they occur instead of inventing additional
-preconditions.
+Read [the mandatory readiness standard](references/release-readiness.md) and
+complete [the readiness record](references/release-readiness-record.md).
+Missing or unresolved evidence cannot pass. ASF source headers/provenance,
+dependency licenses, exact package contents and public incubation display are
+ordinary required preparation checks, not optional "general compliance" work.
+Do not expand the run into unrelated governance, key-management, all-platform
+or coverage projects. Report actual failures without inventing preconditions.
+
+When a user expresses release intent, first show a checklist of completed,
+current and remaining steps, then continue authorized work. Update it at
+milestones. Before stopping with the release unfinished, report completed
+work, remaining work, the stopping reason and the concrete next action.
+Preparation success is not completion of signing, staging, voting or release.
+Preserve the user's release scope and reuse existing evidence when resuming.
+If the workbench is running, use its shared progress record as described in
+[release progress](../../docs/release-progress-reporting.md); otherwise keep
+a local checkpoint outside public source and report the same progress in chat.
+An abrupt interruption can leave only the last checkpoint; verify actual
+results on resumption instead of treating an old running status as live work.
 
 ## Establish the run
+
+Do not equate a successful engine command, build, RAT report or advisory scan
+with complete Apache preparation. Complete PREP-01 through PREP-08 before
+declaring readiness for the preparation PR; preserve pending later signing,
+vote and publication gates. Revalidate affected evidence when source or
+artifacts change and correct earlier readiness claims if a gap is discovered.
+Follow [the combined preparation workflow](references/release-preparation.md).
+The Agent record is mandatory; it is not new automated legal enforcement in
+the Go engine, and it does not authorize new target languages or add per-check
+confirmation prompts.
+
+When source preparation is needed, use at most one PR per target repository
+and release version (none when no source edits are necessary). Complete scoped
+version, dependency/public-advisory, legal/RAT, packaging and separate build/test
+checks locally before submitting the combined change. Keep fixes and review
+feedback on that same PR and batch pushes. Do not open a second preparation PR
+automatically after merge: report a new code blocker for an explicit scope
+decision. Verify the actual merged candidate before the RC stages, reusing
+applicable evidence without reusing stale archive hashes. Existing authorization
+persists; tests do not each require approval. This does not change GitHub fork
+approval policy, ASF voting or the engine's separate sign/stage confirmations.
 
 1. Treat the Agent's current directory as the parent workspace. In the expected
    deployment Claude Code works from `/abc`, the repository is

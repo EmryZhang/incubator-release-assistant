@@ -1,5 +1,5 @@
 {
-  "name": "isa-workbench",
+  "name": "ira-workbench",
   "version": "0.2.0",
   "private": true,
   "type": "module",
@@ -10,6 +10,7 @@
     "dev": "tsx watch --include src/**/*.ts src/server/cli.ts serve --dev",
     "build": "npm run typecheck && tsc -p tsconfig.build.json && vite build",
     "start": "node dist/server/cli.js serve",
+    "ira": "tsx src/server/cli.ts",
     "isa": "tsx src/server/cli.ts",
     "typecheck": "tsc --noEmit",
     "test": "npm run build && tsx --test tests/*.test.ts",

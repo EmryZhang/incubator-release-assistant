@@ -698,3 +698,104 @@ dialog h2 {
 .release-select {
   width: auto;
 }
+.release-progress {
+  margin-top: 24px;
+}
+.progress-table {
+  overflow-x: auto;
+  margin: 18px 0;
+}
+.progress-table table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.progress-table th,
+.progress-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e4eaed;
+  vertical-align: top;
+}
+.progress-table tbody th {
+  min-width: 190px;
+  font-weight: 500;
+}
+.progress-table td:last-child {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.progress-badge {
+  display: inline-block;
+  white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #edf1f3;
+  color: #475569;
+  font-size: 12px;
+}
+.progress-badge.done,
+.progress-badge.complete {
+  color: #166534;
+  background: #dcfce7;
+}
+.progress-badge.running {
+  color: #1e40af;
+  background: #dbeafe;
+}
+.progress-badge.blocked,
+.progress-badge.paused {
+  color: #92400e;
+  background: #fef3c7;
+}
+.progress-stop p {
+  margin: 6px 0 0;
+  white-space: pre-wrap;
+}
+.progress-edit {
+  border: 1px solid #dce4e8;
+  border-radius: 8px;
+  margin: 14px 0;
+  padding: 14px;
+}
+.progress-edit legend {
+  padding: 0 6px;
+  font-weight: 600;
+}
+.readiness-item p,
+.readiness-item .report {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.form-error {
+  color: #991b1b;
+  background: #fef2f2;
+  border-left-color: #dc2626;
+}
+@media (max-width: 640px) {
+  .progress-table table,
+  .progress-table tbody {
+    display: block;
+  }
+  .progress-table thead {
+    display: none;
+  }
+  .progress-table tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding: 12px 0;
+    border-bottom: 1px solid #e4eaed;
+  }
+  .progress-table tbody th,
+  .progress-table td {
+    min-width: 0;
+    padding: 4px;
+    border: 0;
+  }
+  .progress-table td:last-child {
+    grid-column: 1 / -1;
+  }
+  .progress-table td:last-child::before {
+    content: "证据 / 说明：";
+    color: #64748b;
+  }
+}

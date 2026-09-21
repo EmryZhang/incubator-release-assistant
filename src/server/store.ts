@@ -1,5 +1,5 @@
 import { randomBytes } from "node:crypto";
-import { promises as fs } from "node:fs";
+import { existsSync, promises as fs } from "node:fs";
 import path from "node:path";
 import os from "node:os";
 import { stateSchema, type State, type Release } from "../shared/model.js";
@@ -8,20 +8,24 @@ export const id = () => randomBytes(12).toString("hex");
 export const now = () => new Date().toISOString();
 export const isMissing = (error: unknown) =>
   (error as NodeJS.ErrnoException).code === "ENOENT";
-export const defaultDir = () =>
-  process.env.ISA_DATA_DIR ||
-  path.join(
+export const defaultDir = () => {
+  const override = process.env.IRA_DATA_DIR || process.env.ISA_DATA_DIR;
+  if (override) return override;
+  const base =
     process.platform === "win32"
       ? process.env.APPDATA || path.join(os.homedir(), "AppData", "Roaming")
       : process.platform === "darwin"
         ? path.join(os.homedir(), "Library", "Application Support")
-        : process.env.XDG_CONFIG_HOME || path.join(os.homedir(), ".config"),
-    "isa",
-  );
+        : process.env.XDG_CONFIG_HOME || path.join(os.homedir(), ".config");
+  const current = path.join(base, "ira");
+  const legacy = path.join(base, "isa");
+  // Reuse existing data in place: evidence may contain absolute paths.
+  return existsSync(current) || !existsSync(legacy) ? current : legacy;
+};
 
 export async function atomicWrite(file: string, content: string | Buffer) {
   await fs.mkdir(path.dirname(file), { recursive: true, mode: 0o700 });
-  const temporary = path.join(path.dirname(file), `.isa-tmp-${id()}`);
+  const temporary = path.join(path.dirname(file), `.ira-tmp-${id()}`);
   const handle = await fs.open(temporary, "wx", 0o600);
   try {
     await handle.writeFile(content);
@@ -78,7 +82,7 @@ export class Store {
     } catch (error) {
       if (!isMissing(error))
         throw new Error(
-          `Cannot load saved ISA state; original file preserved: ${String(error)}`,
+          `Cannot load saved IRA state; original file preserved: ${String(error)}`,
         );
     }
     const projectIDs = new Set(state.projects.map((p) => p.id));
@@ -171,9 +175,9 @@ export async function acquireLock(dir: string) {
       }
       if (running)
         throw new Error(
-          "This ISA data directory is already in use. Stop its server before restarting.",
+          "This IRA data directory is already in use. Stop its server before restarting.",
         );
-      if (attempt === 1) throw new Error("Could not acquire ISA data lock");
+      if (attempt === 1) throw new Error("Could not acquire IRA data lock");
       await fs.unlink(file);
     }
   }

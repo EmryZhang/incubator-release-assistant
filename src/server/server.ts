@@ -79,13 +79,13 @@ async function rejectLiveSession(dir: string) {
   }
   if (running)
     throw new Error(
-      "An ISA server already uses this data directory. Stop it before migrating or restarting.",
+      "An IRA server already uses this data directory. Stop it before migrating or restarting.",
     );
 }
 export async function startServer(options: ServerOptions) {
   const host = options.host || "127.0.0.1";
   if (!isLoopback(host))
-    throw new Error("ISA only binds a numeric loopback address");
+    throw new Error("IRA only binds a numeric loopback address");
   const store = await Store.open(options.dir);
   await rejectLiveSession(store.dir);
   const unlock = await acquireLock(store.dir);
@@ -169,6 +169,12 @@ export async function startServer(options: ServerOptions) {
               ),
             );
             return;
+          case "/api/progress":
+            json(
+              response,
+              await workbench.progress(query.get("releaseId") || ""),
+            );
+            return;
           case "/api/draft": {
             const draft = getRelease(
               state,
@@ -178,7 +184,7 @@ export async function startServer(options: ServerOptions) {
             response.setHeader("Content-Type", "message/rfc822");
             response.setHeader(
               "Content-Disposition",
-              'attachment; filename="isa-draft.eml"',
+              'attachment; filename="ira-draft.eml"',
             );
             response.end(draftEML(draft));
             return;

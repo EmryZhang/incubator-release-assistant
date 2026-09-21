@@ -6,7 +6,7 @@ import path from "node:path";
 import os from "node:os";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { Store, acquireLock } from "../src/server/store.js";
+import { Store, acquireLock, defaultDir } from "../src/server/store.js";
 import { Workbench, draftEML } from "../src/server/actions.js";
 import { git, repoView, safeRead } from "../src/server/git.js";
 import { startServer } from "../src/server/server.js";
@@ -21,11 +21,56 @@ import type {
 } from "../src/shared/model.js";
 
 const execute = promisify(execFile);
+
+test("IRA defaults preserve existing ISA data and environment overrides", async (t) => {
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "ira-naming-"));
+  const keys = ["IRA_DATA_DIR", "ISA_DATA_DIR", "APPDATA", "XDG_CONFIG_HOME"];
+  const previous = keys.map((key) => process.env[key]);
+  t.mock.method(os, "homedir", () => dir);
+  t.after(async () => {
+    keys.forEach((key, index) => {
+      if (previous[index] === undefined) delete process.env[key];
+      else process.env[key] = previous[index];
+    });
+    await fs.rm(dir, { recursive: true, force: true });
+  });
+  delete process.env.IRA_DATA_DIR;
+  delete process.env.ISA_DATA_DIR;
+  process.env.APPDATA = dir;
+  process.env.XDG_CONFIG_HOME = dir;
+  const base =
+    process.platform === "darwin"
+      ? path.join(dir, "Library", "Application Support")
+      : dir;
+  const current = path.join(base, "ira");
+  const legacy = path.join(base, "isa");
+  assert.equal(defaultDir(), current);
+  await fs.mkdir(legacy, { recursive: true });
+  const saved =
+    '{"schema":1,"projects":[],"releases":[],"preferences":{"toolchain":"builtin","signature":"saved signature"}}';
+  await fs.writeFile(path.join(legacy, "state.json"), saved);
+  assert.equal(defaultDir(), legacy);
+  assert.equal(
+    (await Store.open(defaultDir())).snapshot().preferences.signature,
+    "saved signature",
+  );
+  assert.equal(
+    await fs.readFile(path.join(legacy, "state.json"), "utf8"),
+    saved,
+  );
+  await fs.mkdir(current);
+  assert.equal(defaultDir(), current);
+  process.env.ISA_DATA_DIR = path.join(dir, "legacy-override");
+  assert.equal(defaultDir(), process.env.ISA_DATA_DIR);
+  process.env.IRA_DATA_DIR = path.join(dir, "current-override");
+  assert.equal(defaultDir(), process.env.IRA_DATA_DIR);
+});
+
 async function fixture(dir: string) {
   await fs.mkdir(dir, { recursive: true });
   await git(dir, ["init"]);
-  await git(dir, ["config", "user.name", "ISA test"]);
-  await git(dir, ["config", "user.email", "isa@example.invalid"]);
+  await git(dir, ["config", "user.name", "IRA test"]);
+  await git(dir, ["config", "user.email", "ira@example.invalid"]);
   await git(dir, ["config", "commit.gpgsign", "false"]);
   for (const [name, content] of Object.entries({
     LICENSE: "Apache License test fixture\n",
@@ -40,7 +85,7 @@ async function fixture(dir: string) {
   return dir;
 }
 test("real Git check, Agent edit/report, mail task/reply and restart preserve state", async (t) => {
-  const temporary = await fs.mkdtemp(path.join(os.tmpdir(), "isa-node-"));
+  const temporary = await fs.mkdtemp(path.join(os.tmpdir(), "ira-node-"));
   t.after(() => fs.rm(temporary, { recursive: true, force: true }));
   const repo = await fixture(path.join(temporary, "repo")),
     data = path.join(temporary, "data");
@@ -155,7 +200,7 @@ test("real Git check, Agent edit/report, mail task/reply and restart preserve st
 });
 
 test("Go schema 1 data stays readable and is backed up before first Node write", async (t) => {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "isa-migrate-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "ira-migrate-"));
   t.after(() => fs.rm(dir, { recursive: true, force: true }));
   const original: State = {
     schema: 1,
@@ -233,7 +278,7 @@ test("Go schema 1 data stays readable and is backed up before first Node write",
 });
 
 test("stale reports, path boundaries, validation and concurrent writes", async (t) => {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "isa-boundary-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "ira-boundary-"));
   t.after(() => fs.rm(dir, { recursive: true, force: true }));
   const repo = await fixture(path.join(dir, "repo")),
     store = await Store.open(path.join(dir, "data")),
@@ -341,7 +386,7 @@ test("stale reports, path boundaries, validation and concurrent writes", async (
 });
 
 test("production Node server and CLI enforce API boundaries without needing Go", async (t) => {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "isa-http-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "ira-http-"));
   t.after(() => fs.rm(dir, { recursive: true, force: true }));
   const app = await startServer({ dir, port: 0 });
   t.after(() => app.close());
@@ -391,7 +436,7 @@ test("production Node server and CLI enforce API boundaries without needing Go",
     400,
   );
   const homepage = await fetch(base);
-  assert.match(await homepage.text(), /ISA/);
+  assert.match(await homepage.text(), /IRA/);
   assert.match(
     homepage.headers.get("content-security-policy") || "",
     /frame-ancestors 'none'/,

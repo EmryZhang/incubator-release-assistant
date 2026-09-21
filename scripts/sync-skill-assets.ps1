@@ -13,4 +13,13 @@ Copy-Item -LiteralPath (Join-Path $root "config\release-queue.schema.json") `
 Copy-Item -LiteralPath (Join-Path $root "config\examples\casbin-release-queue.json") `
     -Destination (Join-Path $skillAssets "examples\casbin-release-queue.json") -Force
 
+foreach ($skillName in @("incubator-release-assistant", "ira-workbench", "apache-incubator-handbook")) {
+    $references = Join-Path $root "skills\$skillName\references"
+    New-Item -ItemType Directory -Path $references -Force | Out-Null
+    foreach ($policyFile in @("release-readiness.md", "release-readiness-record.md", "release-preparation.md")) {
+        Copy-Item -LiteralPath (Join-Path $root "docs\$policyFile") `
+            -Destination (Join-Path $references $policyFile) -Force
+    }
+}
+
 Write-Host "Skill assets synchronized."

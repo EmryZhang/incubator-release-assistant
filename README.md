@@ -1,11 +1,11 @@
-# ISA / Incubator Release Assistant
+# Incubator Release Assistant (IRA)
 
 For the current multi-project release preparation, start with the
 [downloadable release checklists](docs/release-checklists/README.md). Each
 snapshot includes exact commits, completed checks, pending steps, source
 patches, and tools for independent verification and continued development.
 
-**ISA is an open-source Apache release workbench that Agents can use, with a
+**IRA is an open-source Apache release workbench that Agents can use, with a
 friendly local interface and customization.**
 
 Run `npm install` and `npm run dev`, then open the complete URL printed in the
@@ -15,6 +15,26 @@ The [workbench guide](docs/workbench.md)
 covers project onboarding, persistent release tasks, actual Agent handoff and
 diffs, source-snapshot checks, preferences and vote/reply drafts.
 
+When you ask an Agent to advance a release, the IRA Skill calls for an initial
+progress checklist and a report whenever work stops: completed steps, remaining
+work, the stopping reason and the next action. The workbench preserves these
+checkpoints and displays them in the release overview. See
+[release progress](docs/release-progress-reporting.md) for the shared protocol
+and abrupt-interruption limits.
+
+The [preparation review](docs/readiness-workbench.md) records findings by project,
+component and ecosystem. It preserves issue history across same-version RCs,
+marks old conclusions stale after source/settings changes, and checks evidence
+fields before accepting new preparation-complete or later-stage progress claims.
+The UI and Agent API share these records; record completeness is not release
+approval or independent verification of the evidence.
+
+Release preparation uses [at most one PR per repository/version](docs/release-preparation.md):
+complete scoped checks locally, submit the combined fixes, then verify the merged
+candidate and advance the release. Updates stay on the existing PR. Automated
+checks do not add individual approval prompts; GitHub run policies and ASF votes
+remain separate.
+
 The workbench supports generic project/task coordination; the existing **IRA
 release engine still executes Casbin Go RC workflows only**. Workbench source
 snapshots and mail drafts are explicitly separate from signed public RCs,
@@ -22,7 +42,7 @@ community votes and actual email delivery.
 
 ## Existing RC engine and reference skills
 
-Alongside the [ISA workbench Agent bridge](skills/isa-workbench/SKILL.md), this
+Alongside the [IRA workbench Agent bridge](skills/ira-workbench/SKILL.md), this
 repository contains two independent Agent Skills:
 
 - **Incubator Release Assistant (IRA):** a configuration-driven, cross-platform
@@ -76,6 +96,13 @@ The release Skill includes `scripts/run.ps1` for Windows PowerShell 5.1+ and
 `scripts/run.sh` for Bash on Linux and macOS. Both invoke the same Go engine.
 
 ## Release readiness is broader than CI
+
+Every release preparation must follow the [mandatory evidence gates](docs/release-readiness.md)
+and use the [readiness record](docs/release-readiness-record.md). Missing or
+unresolved header, provenance, dependency-license, packaging or public-display
+evidence prevents a preparation-complete claim, even when build/RAT/advisory
+checks pass. These are Agent workflow requirements; the current engine and
+workbench do not automatically decide legal compliance.
 
 Passing target-project CI is necessary evidence for a selected commit; it is
 not release approval. Every RC must additionally undergo RAT on the final

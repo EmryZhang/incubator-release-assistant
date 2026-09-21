@@ -87,3 +87,53 @@ through the task/JSON API and Skill; there is no embedded model chat runtime.
 File previews and Git output are bounded. Legal-file existence does not prove
 legal compliance. Full language adapters, mailbox send/receipt, remote release
 providers, voting results and formal publication remain future capabilities.
+## IRA naming verification — 2026-09-10
+
+The product name is Incubator Release Assistant (IRA). The UI, package name,
+documented npm command and canonical Agent skill now use IRA. Earlier records
+above retain the command names used at the time.
+
+- `npm test` — passed: TypeScript checks, production build and all five tests.
+  The added test checks new `ira` defaults, reading existing `isa` records
+  without rewriting them, directory precedence and both environment overrides.
+- `scripts/validate-repository.ps1` — passed, including the `ira-workbench`
+  skill and both npm entry points.
+- Old npm commands, launcher scripts, skill links and data paths remain
+  compatibility entries. The workspace and historical design directory were
+  not moved.
+
+## Release progress verification — 2026-09-11
+
+- `npm test` passed: TypeScript checks, production build and all seven tests.
+  New coverage exercises stop/completion validation, authenticated progress
+  API and release-level packets, conflicting updates, restart persistence,
+  changed-source detection and reading older records without rewriting them.
+- `scripts/validate-repository.ps1` passed for repository and Skill contracts.
+- A headless Edge run with an isolated Git fixture verified the initial eight
+  steps, saving a paused report with evidence, and copyable report text. Desktop
+  and 390-pixel mobile views were inspected; no page errors or page overflow.
+- This records checkpoints from users and Agents. It does not automatically
+  detect a killed Agent, validate claimed external evidence, or execute any new
+  signing, staging, voting, distribution or mail-sending provider.
+
+## Preparation review verification — 2026-09-21
+
+- `npm test` passed: TypeScript checks, production build and all eight tests.
+  The new integration scenario uses a temporary Git repository and covers
+  missing closure evidence, exception-authority fields, immutable finding
+  identities, concurrent writers, source/settings changes, progress gating,
+  restart persistence and same-version RC history inheritance. Older schema-1
+  records remain byte-identical after read and acquire pending virtual checks.
+- `scripts/validate-repository.ps1` passed. The IRA workbench Skill passed
+  `quick_validate.py` with Python UTF-8 mode; Windows' default GBK encoding
+  could not decode the existing multilingual Skill text.
+- In-app browser testing with isolated Java and Rust demonstration projects
+  verified project-specific ecosystem records, blockers appearing first,
+  refusal of an evidence-free closure, an inline error inside the modal,
+  successful saving of an unresolved item, visible appended history and RC2
+  inheritance. The narrow layout and modal error were visually inspected.
+- The demo records are fictional and live outside the product repository.
+  They are not readiness findings or approvals for an actual Apache release.
+  The API checks record structure, freshness and supported progress transitions;
+  it does not validate linked evidence or authenticate a claimed decision maker.
+  External release tools and custom progress labels remain outside this guard.

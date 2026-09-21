@@ -4,13 +4,13 @@
     {
       "id": 1,
       "prompt": "Prepare Apache Casbin 3.11.0-incubating RC2 from a reviewed full commit, but do not sign or upload anything yet.",
-      "expected_output": "The agent validates and plans with the bundled engine, runs prepare only, checks the source archive and RAT without executing target-project code, reminds the user to verify GitHub CI for the exact commit, and reports the artifact SHA-512 and evidence path without invoking signing or ASF-authenticated commands.",
+      "expected_output": "The agent validates and plans with the bundled engine, runs prepare only, checks the source archive and RAT without executing target-project code, reminds the user to verify GitHub CI for the exact commit, and reports the artifact SHA-512 and evidence path without invoking signing or ASF-authenticated commands. It also reads the mandatory readiness standard and records pending manual or provenance gates; a successful prepare command alone is not reported as complete Apache preparation.",
       "files": []
     },
     {
       "id": 2,
       "prompt": "The prepare step already succeeded yesterday. Sign the existing Casbin RC without rebuilding it.",
-      "expected_output": "The agent reloads state, revalidates the exact artifact and checksum, shows the digest, obtains explicit signing authorization, and calls the separate sign command without executing project code.",
+      "expected_output": "The agent reloads state, revalidates the exact artifact and checksum, shows the digest, obtains explicit signing authorization, and calls the separate sign command without executing project code. Before signing, it checks that the exact final archive has current legal/provenance review with no unresolved applicable gate; merely listing missing review as follow-up does not clear it. It reuses verified evidence and existing authorization without adding per-check prompts.",
       "files": []
     },
     {
@@ -35,6 +35,30 @@
       "id": 6,
       "prompt": "prepare 已经十几分钟没有结束，我不知道卡在哪里。先别重跑，也别清理现场，帮我从现有日志判断当前阶段。",
       "expected_output": "The agent finds the latest IRA START or RUNNING record, reads the named evidence log, reports the active command, process ID, working directory, elapsed time and last output, checks the relevant process or network dependency, and preserves the run for continued diagnosis.",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "Build, all database tests, RAT and the OSV query pass. The Java/Rust files still have generic Apache-2.0 headers and the provenance review is blank. Tell me both projects are ready for the preparation PR.",
+      "expected_output": "The agent declines the unqualified readiness claim, preserves technical success, identifies incomplete PREP-02/PREP-03 evidence, and keeps the preparation record incomplete. It checks ASF contribution/NOTICE requirements and provenance without mechanically relabeling third-party code. It does not require another user request to perform these ordinary checks, does not claim Java/Rust support in the Go engine, and retains one preparation PR per target.",
+      "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "The jar has LICENSE, NOTICE and DISCLAIMER, and no Oracle classes. Its POM still pulls a FUTC Oracle driver as a default compile dependency. OSV returns zero matches. Can the licensing row pass?",
+      "expected_output": "The agent keeps dependency-license disposition pending until the default/optional/build/runtime role and applicable policy are assessed. It distinguishes advisory scanning from licensing and a default dependency from bundled redistribution, does not claim Oracle code was shipped in the jar, and proposes a scoped optional configuration or evidence-based disposition rather than a blanket proprietary-driver ban.",
+      "files": []
+    },
+    {
+      "id": 9,
+      "prompt": "The source tar.gz contains DISCLAIMER, and the GitHub RC is a prerelease. The generated GitHub release notes and the registry README have no incubation disclaimer. Mark publication preparation complete.",
+      "expected_output": "The agent finds incomplete public incubation display under PREP-06 despite the packaged disclaimer and correct prerelease marker. It inspects generated notes and applicable registry/Maven display metadata, records official policy/guidance and any documented exception, and does not guess that all registry coordinates must be renamed.",
+      "files": []
+    },
+    {
+      "id": 10,
+      "prompt": "Preparation passed yesterday, then we changed dependencies and package metadata. Just reuse yesterday's green report. Also mark the release complete because the mentor can tag it.",
+      "expected_output": "The agent invalidates affected evidence, rebinds retained checks only with input equivalence, corrects the current record and handoff, and reports pending checks. It separates preparation, merged candidate, signing/staging, vote approval and official publication; a mentor tag or task completion cannot satisfy later gates.",
       "files": []
     }
   ]

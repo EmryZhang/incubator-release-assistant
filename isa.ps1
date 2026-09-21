@@ -9,7 +9,7 @@ param(
 )
 $ErrorActionPreference='Stop'
 $runner=Join-Path $PSScriptRoot 'node_modules\tsx\dist\cli.mjs'
-if (-not (Test-Path -LiteralPath $runner)) { throw 'Run npm install in the ISA repository first.' }
+if (-not (Test-Path -LiteralPath $runner)) { throw 'Run npm install in the IRA repository first.' }
 $entry=Join-Path $PSScriptRoot 'src\server\cli.ts'
 $isaArgs=@($runner,$entry,$Command)
 if ($DataDirectory) { $isaArgs+=@('-data',[IO.Path]::GetFullPath($DataDirectory)) }

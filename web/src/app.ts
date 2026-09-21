@@ -8,6 +8,18 @@ import type {
   RepoView,
 } from "../../src/shared/model.js";
 import "./style.css";
+import {
+  readinessView,
+  readinessContext,
+  readinessLabels,
+  emptyReadiness,
+  formatReadiness,
+} from "../../src/shared/readiness.js";
+import {
+  currentProgress,
+  formatProgress,
+  progressLabels,
+} from "../../src/shared/progress.js";
 ("use strict");
 function $<T extends HTMLElement = HTMLElement>(selector: string): T {
   const element = document.querySelector<T>(selector);
@@ -48,9 +60,11 @@ const toolName = (s: string) =>
   s === "agent" ? "内置检查 + Agent 辅助" : "内置确定性检查";
 let token =
   new URLSearchParams(location.hash.slice(1)).get("token") ||
+  sessionStorage.getItem("ira-token") ||
   sessionStorage.getItem("isa-token") ||
   "";
-if (token) sessionStorage.setItem("isa-token", token);
+if (token) sessionStorage.setItem("ira-token", token);
+sessionStorage.removeItem("isa-token");
 history.replaceState(null, "", location.pathname);
 window.addEventListener("hashchange", () => {
   if (new URLSearchParams(location.hash.slice(1)).get("token"))
@@ -129,19 +143,19 @@ function toolsOptions(selected: string, inherit = false) {
 function render() {
   queueMicrotask(() => labelFields($("#app")));
   $("#app").innerHTML =
-    `<div class="shell"><aside class="sidebar"><div class="brand"><div class="brand-mark">i</div><div><strong>ISA</strong><small>APACHE RELEASE WORKSPACE</small></div></div><nav>${button('◫　项目 <span class="nav-count">' + state.projects.length + "</span>", "nav", "projects", page === "projects" ? "active" : "")}${button("↗　发布工作台", "nav", "workbench", page === "workbench" ? "active" : "")}${button("⚙　偏好与说明", "nav", "settings", page === "settings" ? "active" : "")}</nav><div class="side-foot"><p><span class="dot"></span>本地运行 · 数据由你保管</p><p>让每一次 Apache 发布，<br>都有清楚的下一步。</p><span>ISA · Node.js / TypeScript</span></div></aside><main id="main" class="main"><div class="topline"><span>工作空间 / ${page === "projects" ? "项目" : page === "settings" ? "偏好与说明" : "发布工作台"}</span><span class="pill">LOCAL · 仅本机访问</span></div>${page === "projects" ? projectsPage() : page === "settings" ? settingsPage() : workbenchPage()}</main></div>`;
+    `<div class="shell"><aside class="sidebar"><div class="brand"><div class="brand-mark">i</div><div><strong>IRA</strong><small>APACHE RELEASE WORKSPACE</small></div></div><nav>${button('◫　项目 <span class="nav-count">' + state.projects.length + "</span>", "nav", "projects", page === "projects" ? "active" : "")}${button("↗　发布工作台", "nav", "workbench", page === "workbench" ? "active" : "")}${button("⚙　偏好与说明", "nav", "settings", page === "settings" ? "active" : "")}</nav><div class="side-foot"><p><span class="dot"></span>本地运行 · 数据由你保管</p><p>让每一次 Apache 发布，<br>都有清楚的下一步。</p><span>IRA · Node.js / TypeScript</span></div></aside><main id="main" class="main"><div class="topline"><span>工作空间 / ${page === "projects" ? "项目" : page === "settings" ? "偏好与说明" : "发布工作台"}</span><span class="pill">LOCAL · 仅本机访问</span></div>${page === "projects" ? projectsPage() : page === "settings" ? settingsPage() : workbenchPage()}</main></div>`;
 }
 function labelFields(root: HTMLElement) {
   root.querySelectorAll("label").forEach((label, i) => {
     const field = label.nextElementSibling;
     if (field && /^(INPUT|SELECT|TEXTAREA)$/.test(field.tagName)) {
-      if (!field.id) field.id = "isa-field-" + root.id + "-" + i;
+      if (!field.id) field.id = "ira-field-" + root.id + "-" + i;
       label.htmlFor = field.id;
     }
   });
 }
 function projectsPage() {
-  return `<div class="hero"><div><div class="eyebrow">YOUR RELEASES, IN ONE PLACE</div><h1>从一个本地项目开始</h1><p class="muted">浏览源码、协作修正、核对证据，再准备社区沟通。ISA 帮你把发布拆成可理解、可接续的步骤。</p></div>${button("＋ 添加项目", "addProject", "", "primary")}</div><div class="stats"><div class="stat"><b>${state.projects.length}</b><span>已添加的项目</span></div><div class="stat"><b>${state.releases.length}</b><span>发布任务</span></div><div class="stat"><b>${state.releases.flatMap((r) => r.jobs).filter((j) => j.status !== "done").length}</b><span>待处理 / 待审查</span></div></div>${state.projects.length ? `<div class="grid">${state.projects.map((p) => `<article class="card project"><div class="row between"><span class="badge-num">${esc(p.name[0].toUpperCase())}</span><span class="pill">${p.incubating ? "Apache 孵化中" : "项目工作区"}</span></div><h2>${esc(p.name)}</h2><span class="muted path">${esc(p.path)}</span><div class="small muted">${state.releases.filter((r) => r.projectId === p.id).length} 个发布任务 · 保留原目录</div>${button("打开项目 →", "openProject", p.id)}</article>`).join("")}</div>` : `<div class="empty"><div class="eyebrow">第一次使用 ISA</div><h2>项目不需要搬家</h2><p class="muted">添加你已经 clone 的 Git 仓库绝对路径。ISA 会读取当前分支和改动；发布记录、个人笔记和草稿保存在独立的本地数据目录。</p>${button("添加第一个项目", "addProject", "", "primary")}<div class="step-grid"><div><b>01　添加仓库</b><span class="muted">选择已有项目，查看真实 Git 状态。</span></div><div><b>02　创建发布任务</b><span class="muted">确定版本和工具，让 Agent 接续修正。</span></div><div><b>03　准备审核与沟通</b><span class="muted">核对检查证据，整理投票和回复草稿。</span></div></div></div>`}<div class="hint mt">初版提供项目管理、真实源码快照检查、Agent 任务和邮件草稿。完整 RC 的 RAT、签名、公开验证以及社区投票仍需在相应流程中完成。</div>`;
+  return `<div class="hero"><div><div class="eyebrow">YOUR RELEASES, IN ONE PLACE</div><h1>从一个本地项目开始</h1><p class="muted">浏览源码、协作修正、核对证据，再准备社区沟通。IRA 帮你把发布拆成可理解、可接续的步骤。</p></div>${button("＋ 添加项目", "addProject", "", "primary")}</div><div class="stats"><div class="stat"><b>${state.projects.length}</b><span>已添加的项目</span></div><div class="stat"><b>${state.releases.length}</b><span>发布任务</span></div><div class="stat"><b>${state.releases.flatMap((r) => r.jobs).filter((j) => j.status !== "done").length}</b><span>待处理 / 待审查</span></div></div>${state.projects.length ? `<div class="grid">${state.projects.map((p) => `<article class="card project"><div class="row between"><span class="badge-num">${esc(p.name[0].toUpperCase())}</span><span class="pill">${p.incubating ? "Apache 孵化中" : "项目工作区"}</span></div><h2>${esc(p.name)}</h2><span class="muted path">${esc(p.path)}</span><div class="small muted">${state.releases.filter((r) => r.projectId === p.id).length} 个发布任务 · 保留原目录</div>${button("打开项目 →", "openProject", p.id)}</article>`).join("")}</div>` : `<div class="empty"><div class="eyebrow">第一次使用 IRA</div><h2>项目不需要搬家</h2><p class="muted">添加你已经 clone 的 Git 仓库绝对路径。IRA 会读取当前分支和改动；发布记录、个人笔记和草稿保存在独立的本地数据目录。</p>${button("添加第一个项目", "addProject", "", "primary")}<div class="step-grid"><div><b>01　添加仓库</b><span class="muted">选择已有项目，查看真实 Git 状态。</span></div><div><b>02　创建发布任务</b><span class="muted">确定版本和工具，让 Agent 接续修正。</span></div><div><b>03　准备审核与沟通</b><span class="muted">核对检查证据，整理投票和回复草稿。</span></div></div></div>`}<div class="hint mt">初版提供项目管理、真实源码快照检查、Agent 任务和邮件草稿。完整 RC 的 RAT、签名、公开验证以及社区投票仍需在相应流程中完成。</div>`;
 }
 function workbenchPage() {
   const p = state.projects.find((p) => p.id === pid),
@@ -160,6 +174,7 @@ function workbenchPage() {
       : ""
   }</div><div class="tabs">${[
     ["overview", "总览"],
+    ["readiness", "准备审查"],
     ["agent", "Agent 与改动"],
     ["checks", "工具链与检查"],
     ["mail", "投票与邮件"],
@@ -170,15 +185,69 @@ function workbenchPage() {
     )
     .join(
       "",
-    )}</div>${tab === "notes" ? notesPage() : !r ? `<div class="empty"><h2>为 ${esc(p.name)} 创建第一次发布任务</h2><p class="muted">填写目标版本、选择工具链。之后可随时退出，再从同一个任务继续。</p>${button("创建发布任务", "createRelease", "", "primary")}</div>` : tab === "agent" ? agentPage(r) : tab === "checks" ? checksPage(r) : tab === "mail" ? mailPage(r) : overview(r)}`;
+    )}</div>${tab === "notes" ? notesPage() : !r ? `<div class="empty"><h2>为 ${esc(p.name)} 创建第一次发布任务</h2><p class="muted">填写目标版本、选择工具链。之后可随时退出，再从同一个任务继续。</p>${button("创建发布任务", "createRelease", "", "primary")}</div>` : tab === "readiness" ? readinessPage(r) : tab === "agent" ? agentPage(r) : tab === "checks" ? checksPage(r) : tab === "mail" ? mailPage(r) : overview(r)}`;
 }
 function overview(r: Release) {
   const last = r.checks.at(-1),
     unresolved = r.jobs.filter((j) => j.status !== "done");
-  return `<div class="steps">${["prepare", "review", "communication"].map((s, i) => `<div class="${r.phase === s ? "current" : ""}">${i + 1}　${labels[s]}</div>`).join("")}<div>后续：正式发布与公告</div></div><div class="two"><div><section class="card"><div class="section-title"><h2>这次发布，下一步做什么</h2><span class="pill">${esc(r.rc)}</span></div><p class="muted">阶段用于整理工作，不代表 Apache 审批或检查已完成。</p><div class="task"><h3>1. 查看改动，让 Agent 处理具体问题</h3><p class="muted">${unresolved.length} 项待处理或待审查。保留原有改动，逐项解释修正理由。</p>${button("打开 Agent 与改动", "tab", "agent", "mini")}</div><div class="task"><h3>2. 为当前提交留一份检查证据</h3><p class="muted">${last ? (checkStale(last, r) ? "文件或检查设置已变化，旧检查不能证明当前状态。" : "已有检查记录；仍需处理失败和未执行项。") : "还未运行检查。先生成固定 HEAD 提交的源码快照。"}</p>${button("查看检查", "tab", "checks", "mini")}</div><div class="task"><h3>3. 起草投票，接住审查意见</h3><p class="muted">准备草稿并核实候选包链接；收到回复后关联成任务。</p>${button("打开沟通", "tab", "mail", "mini")}</div></section></div><aside><section class="card"><h2>发布设置</h2><form data-form="releaseSettings"><label>当前工作阶段</label><select name="phase">${["prepare", "review", "communication"].map((s) => `<option value="${s}" ${s === r.phase ? "selected" : ""}>${labels[s]}</option>`).join("")}</select><label>本次任务工具链</label><select name="toolchain">${toolsOptions(r.toolchain)}</select><p class="small muted mt">来源：本次发布配置。创建时继承项目设置或个人默认。</p><button class="primary">保存设置</button></form></section><div class="hint"><strong>新手提示</strong><br>一个绿色检查项只证明它描述的范围。发布投票、正式分发和公告各有独立证据，ISA 不会用一个“完成”按钮代替这些步骤。</div></aside></div>`;
+  return `${readinessSummary(r)}${progressPanel(r)}<div class="two"><div><section class="card"><div class="section-title"><h2>这次发布，下一步做什么</h2><span class="pill">${esc(r.rc)}</span></div><p class="muted">阶段用于整理工作，不代表 Apache 审批或检查已完成。</p><div class="task"><h3>1. 查看改动，让 Agent 处理具体问题</h3><p class="muted">${unresolved.length} 项待处理或待审查。保留原有改动，逐项解释修正理由。</p>${button("打开 Agent 与改动", "tab", "agent", "mini")}</div><div class="task"><h3>2. 为当前提交留一份检查证据</h3><p class="muted">${last ? (checkStale(last, r) ? "文件或检查设置已变化，旧检查不能证明当前状态。" : "已有检查记录；仍需处理失败和未执行项。") : "还未运行检查。先生成固定 HEAD 提交的源码快照。"}</p>${button("查看检查", "tab", "checks", "mini")}</div><div class="task"><h3>3. 起草投票，接住审查意见</h3><p class="muted">准备草稿并核实候选包链接；收到回复后关联成任务。</p>${button("打开沟通", "tab", "mail", "mini")}</div></section></div><aside><section class="card"><h2>发布设置</h2><form data-form="releaseSettings"><label>当前工作阶段</label><select name="phase">${["prepare", "review", "communication"].map((s) => `<option value="${s}" ${s === r.phase ? "selected" : ""}>${labels[s]}</option>`).join("")}</select><label>本次任务工具链</label><select name="toolchain">${toolsOptions(r.toolchain)}</select><p class="small muted mt">来源：本次发布配置。创建时继承项目设置或个人默认。</p><button class="primary">保存设置</button></form></section><div class="hint"><strong>新手提示</strong><br>一个绿色检查项只证明它描述的范围。发布投票、正式分发和公告各有独立证据，IRA 不会用一个“完成”按钮代替这些步骤。</div></aside></div>`;
+}
+function progressPanel(r: Release) {
+  const p = currentProgress(r);
+  const complete = p.steps.filter((s) => s.status === "done").length;
+  const stopped = ["paused", "blocked"].includes(p.status);
+  const stale = p.snapshot && p.snapshot !== view.snapshot;
+  return `<section class="card release-progress" aria-label="发版进度">
+    <div class="section-title"><h2>发版进度 · ${complete}/${p.steps.length} 项已完成</h2><span class="progress-badge ${esc(p.status)}">${esc(progressLabels[p.status])}</span></div>
+    <p>${esc(p.summary)}</p>
+    <p class="small muted">最后记录：${p.at ? date(p.at) : "尚无回报"}。这是已保存的进度，不表示 Agent 此刻仍在运行；以各项证据为准。</p>
+    ${stopped ? `<div class="hint progress-stop"><strong>停止原因</strong><p>${esc(p.stopReason)}</p></div>` : ""}
+    ${stale ? '<p class="hint">回报后仓库内容已变化，请复核与候选包有关的完成项。</p>' : ""}
+    <div class="progress-table"><table><thead><tr><th scope="col">步骤</th><th scope="col">状态</th><th scope="col">证据 / 说明</th></tr></thead><tbody>${p.steps.map((s) => `<tr><th scope="row">${esc(s.title)}</th><td><span class="progress-badge ${esc(s.status)}">${esc(progressLabels[s.status])}</span></td><td>${esc(s.evidence || "尚无回报")}</td></tr>`).join("")}</tbody></table></div>
+    <p><strong>下一步：</strong>${esc(p.nextAction || "本次清单已完成")}</p>
+    <div class="row">${button("更新进度 / 记录暂停", "progressEdit", "", "primary")}${button("查看汇报文本", "progressText")}</div>
+    ${
+      (r.progressReports?.length ?? 0) > 1
+        ? `<details class="mt"><summary>最近 5 次进度记录</summary>${r
+            .progressReports!.slice(-5)
+            .reverse()
+            .map(
+              (h) =>
+                `<p><strong>${date(h.at)} · ${esc(progressLabels[h.status])}</strong><br>${esc(h.summary)}${h.stopReason ? `<br>停止原因：${esc(h.stopReason)}` : ""}<br>下一步：${esc(h.nextAction || "本次清单已完成")}</p>`,
+            )
+            .join("")}</details>`
+        : ""
+    }
+  </section>`;
+}
+function readinessSummary(r: Release) {
+  const review = readinessView(r, project(), view.snapshot);
+  return `<section class="card" aria-label="准备审查摘要"><div class="section-title"><h2>准备审查</h2><span class="progress-badge ${review.ready ? "done" : "blocked"}">${review.ready ? "记录齐备" : `${review.unresolved.length} 项待解决或复查`}</span></div><p class="muted">${review.ready ? "当前候选的准备记录齐备；签名、社区投票和正式发布仍需分别核验。" : "先处理项目自身的未决项。下方进度保留历史操作，不代表当前候选可以继续发布。"}</p>${button("查看准备审查", "tab", "readiness", "primary")}</section>`;
+}
+function readinessPage(r: Release) {
+  const review = readinessView(r, project(), view.snapshot);
+  const ordered = [...review.items].sort(
+    (a, b) =>
+      (b.stale || b.status === "blocked" ? 2 : b.status === "pending" ? 1 : 0) -
+      (a.stale || a.status === "blocked" ? 2 : a.status === "pending" ? 1 : 0),
+  );
+  return `<div class="section-title"><h2>准备审查 · ${review.unresolved.length} 项待解决或复查</h2>${button("＋ 记录项目问题", "readinessAdd", "", "primary")}</div><p class="muted">逐项核对 ${esc(project().name)} 的实际组件、生态和分发渠道。已有问题保留完整历史；填入证据不会自动获得社区或法律批准。</p>${r.readinessInheritedFrom ? '<div class="hint">已继承本项目同版本上一任务的审查历史。请按当前候选复核旧结论，未解决问题继续保留。</div>' : ""}${ordered
+    .map(
+      (item) =>
+        `<article class="card readiness-item"><div class="row between"><h3>${esc(item.id)} · ${esc(item.title)}</h3><span class="progress-badge ${item.stale || item.status === "blocked" ? "blocked" : item.status === "pass" ? "done" : "pending"}">${esc(readinessLabels[item.stale ? "stale" : item.status])}</span></div><p class="small muted">${esc(item.component)} · ${esc(item.ecosystem || "尚未核对生态 / 渠道")}</p><p>${esc(item.observed || "尚无实际候选观察记录")}</p>${item.stale ? '<div class="hint">候选源码或检查设置已变化，请复核此项；旧证据仍保留在历史中。</div>' : ""}<p class="muted">下一步：${esc(item.nextAction || "查看处置与证据")}</p><details><summary>依据、处置与历史</summary><p>依据：${esc(item.basis || "未填写")}</p><p>证据：${esc(item.evidence || "未填写")}</p><p>处置：${esc(item.disposition || "未填写")}</p><p>审查者：${esc(item.reviewer || "未记录")}${item.exception ? `；例外决定：${esc(item.authority || "未记录")}` : ""}</p>${
+          (r.readinessUpdates ?? [])
+            .filter((update) => update.id === item.id)
+            .map(
+              (update) =>
+                `<div class="report"><strong>${esc(readinessLabels[update.status])} · ${date(update.at)}</strong><p>${esc(update.changeReason)}</p><p>${esc(update.observed)}</p><p>依据：${esc(update.basis)}<br>证据：${esc(update.evidence)}<br>处置：${esc(update.disposition)}<br>审查者：${esc(update.reviewer)}${update.exception ? `<br>例外决定：${esc(update.authority)}` : ""}</p></div>`,
+            )
+            .join("") || '<p class="muted">尚无保存的审查历史。</p>'
+        }</details><div class="row mt">${button("更新审查", "readinessEdit", item.id, "mini")}</div></article>`,
+    )
+    .join("")}`;
 }
 function agentPage(r: Release) {
-  return `<div class="hint">你可以使用现有的本地 Agent。先创建任务，再打开“交给 Agent”取得上下文与回报命令。ISA 不会伪装后台已启动模型；真实回报到达后点“刷新状态”查看。</div><div class="section-title"><h2>Agent 任务 <span class="muted">${r.jobs.length}</span></h2>${button("＋ 创建任务", "createJob", "", "primary")}</div>${r.jobs.map((j) => `<article class="task"><div class="row between"><div class="row"><span class="task-title">${esc(j.title)}</span>${badge(j.status)}</div><small>${date(j.createdAt)}</small></div><p class="muted">${esc(j.instructions)}</p>${j.reports.map((a) => `<div class="report"><strong>${esc(a.summary)}</strong><div class="small muted">${date(a.at)} · Agent 回报 ${a.snapshot !== view.snapshot ? "· 文件随后已变化" : ""}</div>${esc(a.evidence)}</div>`).join("")}<div class="row">${button("交给 Agent", "packet", j.id, "mini")}${j.reports.length && j.status !== "done" ? button("审查通过", "reviewJob", j.id, "mini") : ""}${j.status === "done" ? button("重新打开", "reopenJob", j.id, "mini") : ""}</div></article>`).join("") || '<div class="empty"><h3>还没有 Agent 任务</h3><p class="muted">写明需要修正什么、预期结果和验证方式。</p></div>'}<div class="section-title"><h2>真实文件差异</h2><span class="small muted">相对 HEAD · 包含暂存和未暂存改动</span></div><pre class="diff">${
+  return `<div class="hint">你可以使用现有的本地 Agent。先创建任务，再打开“交给 Agent”取得上下文与回报命令。IRA 不会伪装后台已启动模型；真实回报到达后点“刷新状态”查看。</div><div class="section-title"><h2>Agent 任务 <span class="muted">${r.jobs.length}</span></h2>${button("＋ 创建任务", "createJob", "", "primary")}</div>${r.jobs.map((j) => `<article class="task"><div class="row between"><div class="row"><span class="task-title">${esc(j.title)}</span>${badge(j.status)}</div><small>${date(j.createdAt)}</small></div><p class="muted">${esc(j.instructions)}</p>${j.reports.map((a) => `<div class="report"><strong>${esc(a.summary)}</strong><div class="small muted">${date(a.at)} · Agent 回报 ${a.snapshot !== view.snapshot ? "· 文件随后已变化" : ""}</div>${esc(a.evidence)}</div>`).join("")}<div class="row">${button("交给 Agent", "packet", j.id, "mini")}${j.reports.length && j.status !== "done" ? button("审查通过", "reviewJob", j.id, "mini") : ""}${j.status === "done" ? button("重新打开", "reopenJob", j.id, "mini") : ""}</div></article>`).join("") || '<div class="empty"><h3>还没有 Agent 任务</h3><p class="muted">写明需要修正什么、预期结果和验证方式。</p></div>'}<div class="section-title"><h2>真实文件差异</h2><span class="small muted">相对 HEAD · 包含暂存和未暂存改动</span></div><pre class="diff">${
     view.diff
       ? view.diff
           .split("\n")
@@ -199,10 +268,10 @@ function checkStale(c: CheckRun, r: Release) {
 }
 function checksPage(r: Release) {
   const last = r.checks.at(-1);
-  return `<div class="two"><div class="card"><div class="row between"><h2>当前工具链</h2><span class="pill">本次发布选择</span></div><form data-form="toolchain"><label>检查方式</label><select name="toolchain">${toolsOptions(r.toolchain)}</select><p class="muted mt">内置工具读取 Git 状态、检查差异格式，从 HEAD 归档并计算 SHA-512，核对归档中的法律文件与 Go 模块清单。</p><p class="muted">Agent 辅助在此基础上增加可接续的审查任务，由你的 Agent 提交理由和证据；模型输出保留为审查意见。</p><button>保存选择</button></form></div><div class="card"><h2>接入更多发布链路</h2><p class="muted">现有 IRA 命令继续承担 Casbin Go 的 RC 准备、签名和托管。ATR、Magpie 和其他工具尚未接入工作台，后续通过明确的适配器扩展。</p><p class="small muted">初版选择的是检查与协作方式，正式发布的端到端工具选择仍需迭代。</p></div></div><div class="section-title"><h2>检查与证据</h2>${button("运行真实检查", "runCheck", "", "primary")}</div><div class="hint">检查读取当前 Git 仓库，并在 ISA 数据目录生成固定提交的源码快照。未提交的修正不会进入归档；不会运行目标代码、签名、上传或发送邮件。</div>${last ? `${checkStale(last, r) ? '<div class="hint warning">检查后文件或检查设置已改变。这份证据仅对应当时的快照和设置，请重新运行。</div>' : ""}<div class="card"><div class="row between"><h2>最近一次检查</h2><span class="small muted">${date(last.at)}</span></div><div class="mono muted">提交 ${esc(last.commit)}<br>证据 ${esc(last.artifact)}</div>${last.findings.map((f) => `<div class="check"><div class="check-head"><strong>${esc(f.name)}</strong>${badge(f.status)}</div><div><p class="small">${esc(f.detail)}</p>${f.status !== "pass" ? button("转为 Agent 任务", "findingJob", f.name, "mini") : ""}</div></div>`).join("")}</div><details><summary>历史检查 · ${r.checks.length} 次，证据文件持续保留</summary>${r.checks.map((c) => `<div class="task"><strong>${date(c.at)}</strong><div class="mono">${esc(c.commit)}<br>${esc(c.artifact)}<br>SHA-512 ${esc(c.sha512)}</div></div>`).join("")}</details>` : '<div class="empty"><h2>还没有检查证据</h2><p class="muted">运行后会分别显示通过、发现问题、未执行，不会隐藏缺失的发布环节。</p></div>'}`;
+  return `<div class="two"><div class="card"><div class="row between"><h2>当前工具链</h2><span class="pill">本次发布选择</span></div><form data-form="toolchain"><label>检查方式</label><select name="toolchain">${toolsOptions(r.toolchain)}</select><p class="muted mt">内置工具读取 Git 状态、检查差异格式，从 HEAD 归档并计算 SHA-512，核对归档中的法律文件与 Go 模块清单。</p><p class="muted">Agent 辅助在此基础上增加可接续的审查任务，由你的 Agent 提交理由和证据；模型输出保留为审查意见。</p><button>保存选择</button></form></div><div class="card"><h2>接入更多发布链路</h2><p class="muted">现有 IRA 命令继续承担 Casbin Go 的 RC 准备、签名和托管。ATR、Magpie 和其他工具尚未接入工作台，后续通过明确的适配器扩展。</p><p class="small muted">初版选择的是检查与协作方式，正式发布的端到端工具选择仍需迭代。</p></div></div><div class="section-title"><h2>检查与证据</h2>${button("运行真实检查", "runCheck", "", "primary")}</div><div class="hint">检查读取当前 Git 仓库，并在 IRA 数据目录生成固定提交的源码快照。未提交的修正不会进入归档；不会运行目标代码、签名、上传或发送邮件。</div>${last ? `${checkStale(last, r) ? '<div class="hint warning">检查后文件或检查设置已改变。这份证据仅对应当时的快照和设置，请重新运行。</div>' : ""}<div class="card"><div class="row between"><h2>最近一次检查</h2><span class="small muted">${date(last.at)}</span></div><div class="mono muted">提交 ${esc(last.commit)}<br>证据 ${esc(last.artifact)}</div>${last.findings.map((f) => `<div class="check"><div class="check-head"><strong>${esc(f.name)}</strong>${badge(f.status)}</div><div><p class="small">${esc(f.detail)}</p>${f.status !== "pass" ? button("转为 Agent 任务", "findingJob", f.name, "mini") : ""}</div></div>`).join("")}</div><details><summary>历史检查 · ${r.checks.length} 次，证据文件持续保留</summary>${r.checks.map((c) => `<div class="task"><strong>${date(c.at)}</strong><div class="mono">${esc(c.commit)}<br>${esc(c.artifact)}<br>SHA-512 ${esc(c.sha512)}</div></div>`).join("")}</details>` : '<div class="empty"><h2>还没有检查证据</h2><p class="muted">运行后会分别显示通过、发现问题、未执行，不会隐藏缺失的发布环节。</p></div>'}`;
 }
 function mailPage(r: Release) {
-  return `<div class="hint warning">这里保存的是草稿与导入的审查意见。导出 .eml 不等于发送成功；初版没有邮箱发送连接。正式投票前请核实项目流程、真实收件人、公开候选包与验证证据。</div><div class="section-title"><h2>投票与回复草稿</h2>${button("＋ 起草投票", "voteDraft", "", "primary")}</div>${r.drafts.map((d) => `<div class="card"><div class="row between"><h3>${esc(d.subject || "未命名草稿")}</h3><span class="pill">草稿 · 未发送</span></div><p class="small muted">To: ${esc(d.to || "待填写")} · ${date(d.updatedAt)}</p><details><summary>查看正文</summary><pre>${esc(d.body)}</pre></details><div class="row">${button("编辑草稿", "editDraft", d.id, "mini")}${button("导出 .eml", "exportDraft", d.id, "mini")}</div></div>`).join("") || '<p class="muted">还没有草稿。ISA 会根据当前版本生成一份待补充的投票正文。</p>'}<div class="section-title"><h2>收到的审查意见</h2>${button("＋ 导入邮件 / 意见", "importMail")}</div>${r.mails.map((m) => `<article class="card"><h3>${esc(m.subject)}</h3><p class="small muted">${esc(m.from || "发件人未记录")} · ${date(m.at)}</p>${m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noreferrer">打开来源邮件 ↗</a>` : ""}<pre class="diff">${esc(m.body)}</pre><div class="small mono muted">Message-ID: ${esc(m.messageId || "未提供；回复线程需要手工核对")}</div><div class="row mt">${button("转为处理任务", "mailToJob", m.id, "mini")}${button("起草回复", "replyDraft", m.id, "mini")}</div></article>`).join("") || '<div class="empty"><h3>把沟通变成下一步</h3><p class="muted">粘贴收到的邮件正文，补充来源链接和 Message-ID。每条意见都可以关联 Agent 任务，再生成回复草稿。</p></div>'}`;
+  return `<div class="hint warning">这里保存的是草稿与导入的审查意见。导出 .eml 不等于发送成功；初版没有邮箱发送连接。正式投票前请核实项目流程、真实收件人、公开候选包与验证证据。</div><div class="section-title"><h2>投票与回复草稿</h2>${button("＋ 起草投票", "voteDraft", "", "primary")}</div>${r.drafts.map((d) => `<div class="card"><div class="row between"><h3>${esc(d.subject || "未命名草稿")}</h3><span class="pill">草稿 · 未发送</span></div><p class="small muted">To: ${esc(d.to || "待填写")} · ${date(d.updatedAt)}</p><details><summary>查看正文</summary><pre>${esc(d.body)}</pre></details><div class="row">${button("编辑草稿", "editDraft", d.id, "mini")}${button("导出 .eml", "exportDraft", d.id, "mini")}</div></div>`).join("") || '<p class="muted">还没有草稿。IRA 会根据当前版本生成一份待补充的投票正文。</p>'}<div class="section-title"><h2>收到的审查意见</h2>${button("＋ 导入邮件 / 意见", "importMail")}</div>${r.mails.map((m) => `<article class="card"><h3>${esc(m.subject)}</h3><p class="small muted">${esc(m.from || "发件人未记录")} · ${date(m.at)}</p>${m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noreferrer">打开来源邮件 ↗</a>` : ""}<pre class="diff">${esc(m.body)}</pre><div class="small mono muted">Message-ID: ${esc(m.messageId || "未提供；回复线程需要手工核对")}</div><div class="row mt">${button("转为处理任务", "mailToJob", m.id, "mini")}${button("起草回复", "replyDraft", m.id, "mini")}</div></article>`).join("") || '<div class="empty"><h3>把沟通变成下一步</h3><p class="muted">粘贴收到的邮件正文，补充来源链接和 Message-ID。每条意见都可以关联 Agent 任务，再生成回复草稿。</p></div>'}`;
 }
 function notesPage() {
   const p = project();
@@ -294,6 +363,61 @@ document.addEventListener("click", async (e) => {
       );
       return;
     }
+    if (action === "progressEdit") {
+      const p = currentProgress(r);
+      const options = (values: string[], selected: string) =>
+        values
+          .map(
+            (s) =>
+              `<option value="${s}" ${s === selected ? "selected" : ""}>${esc(progressLabels[s])}</option>`,
+          )
+          .join("");
+      modal(
+        "更新发版进度",
+        `<p class="muted">完成项填写证据；暂停或受阻时说明原因和下一步。记录进度不会执行签名、投票或发布。</p>
+        <label>本次推进状态<select name="progressStatus">${options(["pending", "running", "paused", "blocked", "complete"], p.status)}</select></label>
+        <label>当前情况<textarea name="progressSummary" required rows="2">${esc(p.summary)}</textarea></label>
+        <label>停止原因（暂停 / 受阻时必填）<textarea name="stopReason" rows="2">${esc(p.stopReason)}</textarea></label>
+        <label>下一步（尚未全部完成时必填）<textarea name="nextAction" rows="2">${esc(p.nextAction)}</textarea></label>
+        ${p.steps.map((s) => `<fieldset class="progress-edit"><legend>${esc(s.title)}</legend><label>状态<select name="step-${s.id}">${options(["pending", "running", "done", "paused", "blocked", "skipped"], s.status)}</select></label><label>证据 / 不适用理由<textarea name="evidence-${s.id}" rows="2">${esc(s.evidence)}</textarea></label></fieldset>`).join("")}`,
+        "progress",
+        "保存进度",
+      );
+      return;
+    }
+    if (action === "readinessAdd" || action === "readinessEdit") {
+      const review = readinessView(r, project(), view.snapshot);
+      const item =
+        action === "readinessEdit"
+          ? review.items.find((item) => item.id === id)!
+          : emptyReadiness("", "", project().name);
+      const existing = r.readinessUpdates?.some(
+        (update) => update.id === item.id,
+      );
+      const field = (
+        name: string,
+        title: string,
+        value: string,
+        required = false,
+      ) =>
+        `<label>${title}<textarea name="${name}" rows="2" ${required ? "required" : ""}>${esc(value)}</textarea></label>`;
+      modal(
+        "记录准备审查",
+        `<p class="muted">关闭问题须说明实际观察、适用依据和处置证据。已有问题不能通过改名或删除跳过。</p><input type="hidden" name="readinessRevision" value="${review.revision}"><input type="hidden" name="readinessSnapshot" value="${esc(view.snapshot)}"><input type="hidden" name="readinessContext" value="${esc(readinessContext(r, project()))}"><label>问题 ID<input name="id" required pattern="[A-Za-z][A-Za-z0-9-]{0,63}" value="${esc(item.id)}" ${action === "readinessEdit" ? "readonly" : ""} placeholder="例如 NAME-01"></label><label>标题<input name="title" required value="${esc(item.title)}" ${action === "readinessEdit" ? "readonly" : ""}></label><div class="form-row"><label>组件<input name="component" required value="${esc(item.component)}" ${existing ? "readonly" : ""}></label><label>生态 / 发布渠道<input name="ecosystem" value="${esc(item.ecosystem)}" ${existing && item.ecosystem ? "readonly" : ""} placeholder="例如 Maven Central / Java"></label></div><label>状态<select name="status">${["pending", "blocked", "pass", "not-applicable"].map((status) => `<option value="${status}" ${status === item.status ? "selected" : ""}>${esc(readinessLabels[status])}</option>`).join("")}</select></label>${field("observed", "实际观察（文件、坐标、问题）", item.observed)}${field("basis", "适用规则或项目决定及出处", item.basis)}${field("evidence", "验证证据与候选对应关系", item.evidence)}${field("disposition", "修复 / 关闭 / 不适用的具体理由", item.disposition)}<label>审查者及角色<input name="reviewer" value="${esc(item.reviewer)}" placeholder="明确 Agent 或实际人类审查者"></label><label><input name="exception" type="checkbox" ${item.exception ? "checked" : ""}> 此处置依赖例外决定</label><label>例外决定者及其权限依据<input name="authority" value="${esc(item.authority)}"></label>${field("nextAction", "未解决项的下一步", item.nextAction)}${field("changeReason", "本次更新原因 / 新增证据", existing ? "" : "首次核查", true)}`,
+        "readiness",
+        "保存审查记录",
+      );
+      return;
+    }
+    if (action === "progressText") {
+      modal(
+        "发版进度汇报",
+        `<textarea readonly rows="18" aria-label="可复制的发版进度汇报">${esc(formatReadiness(readinessView(r, project(), view.snapshot)) + "\n\n" + formatProgress(`${project().name} ${r.version} (${r.rc})`, currentProgress(r)))}</textarea>`,
+        "packet",
+        "关闭",
+      );
+      return;
+    }
     if (
       action === "createJob" ||
       action === "findingJob" ||
@@ -313,7 +437,7 @@ document.addEventListener("click", async (e) => {
       const packet = await api(`packet?releaseId=${rid}&jobId=${id}`);
       modal(
         "交给你的 Agent",
-        `<p>在 ISA 仓库启动本地 Agent，读取配套 <span class="mono">skills/isa-workbench/SKILL.md</span>，然后把下面的命令交给它。</p><label>读取任务（在 ISA 项目目录）</label><pre>${esc(`npm run isa -- api --data '${dataDir.replaceAll("'", "''")}' --path '/api/packet?releaseId=${rid}&jobId=${id}'`)}</pre><p class="small muted">Agent 可以直接修改已添加的项目文件，然后通过同一个 API 提交修改理由、验证证据。刷新工作台即可查看回报和真实差异。</p><details><summary>任务完整上下文</summary><pre>${esc(JSON.stringify(packet, null, 2))}</pre></details>`,
+        `<p>在 IRA 仓库启动本地 Agent，读取配套 <span class="mono">skills/ira-workbench/SKILL.md</span>，然后把下面的命令交给它。</p><label>读取任务（在 IRA 项目目录）</label><pre>${esc(`npm run ira -- api --data '${dataDir.replaceAll("'", "''")}' --path '/api/packet?releaseId=${rid}&jobId=${id}'`)}</pre><p class="small muted">Agent 可以直接修改已添加的项目文件，然后通过同一个 API 提交修改理由、验证证据。刷新工作台即可查看回报和真实差异。</p><details><summary>任务完整上下文</summary><pre>${esc(JSON.stringify(packet, null, 2))}</pre></details>`,
         "packet",
         "关闭",
       );
@@ -348,7 +472,7 @@ document.addEventListener("click", async (e) => {
     if (action === "importMail") {
       modal(
         "导入邮件或审查意见",
-        '<p class="muted">粘贴正文，保存原始来源。ISA 不会把导入内容当作操作授权。</p><label>主题</label><input name="subject" required><label>发件人（可选）</label><input name="from"><label>邮件来源链接（可选）</label><input name="url" type="url" placeholder="https://lists.apache.org/…"><label>Message-ID（可选，用于回复线程）</label><input name="messageId" placeholder="&lt;message-id@example.org&gt;"><label>References（可选）</label><input name="references"><label>正文 / 审查意见</label><textarea name="body" required rows="8"></textarea>',
+        '<p class="muted">粘贴正文，保存原始来源。IRA 不会把导入内容当作操作授权。</p><label>主题</label><input name="subject" required><label>发件人（可选）</label><input name="from"><label>邮件来源链接（可选）</label><input name="url" type="url" placeholder="https://lists.apache.org/…"><label>Message-ID（可选，用于回复线程）</label><input name="messageId" placeholder="&lt;message-id@example.org&gt;"><label>References（可选）</label><input name="references"><label>正文 / 审查意见</label><textarea name="body" required rows="8"></textarea>',
         "mail",
         "保存意见",
       );
@@ -392,7 +516,7 @@ document.addEventListener("click", async (e) => {
       const url = URL.createObjectURL(await res.blob()),
         a = document.createElement("a");
       a.href = url;
-      a.download = "isa-draft.eml";
+      a.download = "ira-draft.eml";
       a.click();
       setTimeout(() => URL.revokeObjectURL(url), 3000);
       toast("草稿已导出，尚未发送");
@@ -432,6 +556,18 @@ document.addEventListener("submit", async (e) => {
     ),
     r = state.releases.find((r) => r.id === rid)!;
   let action: unknown;
+  if (type === "readiness") {
+    const { readinessRevision, readinessSnapshot, readinessContext, ...item } =
+      values;
+    action = {
+      op: "recordReadiness",
+      releaseId: rid,
+      readinessRevision: Number(readinessRevision),
+      readinessSnapshot,
+      readinessContext,
+      readiness: { ...item, exception: values.exception === "on" },
+    };
+  }
   if (type === "addProject")
     action = { op: type, ...values, incubating: values.incubating === "on" };
   if (type === "createRelease")
@@ -440,6 +576,23 @@ document.addEventListener("submit", async (e) => {
     action = { op: "updateRelease", releaseId: rid, ...values };
   if (type === "toolchain")
     action = { op: "updateRelease", releaseId: rid, phase: r.phase, ...values };
+  if (type === "progress")
+    action = {
+      op: "reportProgress",
+      releaseId: rid,
+      progressRevision: r.progressReports?.length ?? 0,
+      progress: {
+        status: values.progressStatus,
+        summary: values.progressSummary,
+        stopReason: values.stopReason,
+        nextAction: values.nextAction,
+        steps: currentProgress(r).steps.map((s) => ({
+          ...s,
+          status: values[`step-${s.id}`],
+          evidence: values[`evidence-${s.id}`],
+        })),
+      },
+    };
   if (type === "job")
     action = {
       op: values.mailId ? "mailToJob" : "createJob",
@@ -465,6 +618,7 @@ document.addEventListener("submit", async (e) => {
       incubating: values.incubating === "on",
     };
   if (!action) return;
+  form.querySelector("[data-form-error]")?.remove();
   busy = true;
   toast("正在保存…");
   const submit =
@@ -487,7 +641,17 @@ document.addEventListener("submit", async (e) => {
     $<HTMLDialogElement>("#dialog").close();
     toast("已保存到本地");
   } catch (err) {
-    toast(err instanceof Error ? err.message : String(err), true);
+    const message = err instanceof Error ? err.message : String(err);
+    const error = document.createElement("p");
+    error.dataset.formError = "";
+    error.className = "hint form-error";
+    error.setAttribute("role", "alert");
+    error.textContent = message;
+    const actions = form.querySelector(".actions");
+    if (actions) actions.before(error);
+    else form.append(error);
+    error.scrollIntoView({ block: "nearest" });
+    toast(message, true);
   } finally {
     busy = false;
     if (submit) submit.disabled = false;
@@ -495,6 +659,6 @@ document.addEventListener("submit", async (e) => {
 });
 load().catch((err) => {
   $("#app").innerHTML =
-    `<main class="loading"><h1>连接本地 ISA</h1><p>${esc(err instanceof Error ? err.message : String(err))}</p><p class="muted">请从终端打开本次启动显示的完整链接（包含会话片段）。</p><button id="retry">重试连接</button></main>`;
+    `<main class="loading"><h1>连接本地 IRA</h1><p>${esc(err instanceof Error ? err.message : String(err))}</p><p class="muted">请从终端打开本次启动显示的完整链接（包含会话片段）。</p><button id="retry">重试连接</button></main>`;
   $("#retry").onclick = () => location.reload();
 });

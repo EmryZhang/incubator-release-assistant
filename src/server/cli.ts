@@ -38,7 +38,7 @@ async function main() {
       url.username ||
       url.password
     )
-      throw new Error("Session must point to local ISA");
+      throw new Error("Session must point to local IRA");
     if (!values.path.startsWith("/api/"))
       throw new Error("path must start with /api/");
     const body = values.body
@@ -55,7 +55,7 @@ async function main() {
       signal: AbortSignal.timeout(120000),
     });
     const result = await response.text();
-    if (!response.ok) throw new Error(`ISA ${response.status}: ${result}`);
+    if (!response.ok) throw new Error(`IRA ${response.status}: ${result}`);
     console.log(result);
     return;
   }
@@ -70,7 +70,7 @@ async function main() {
     throw new Error("invalid port");
   const app = await startServer({ dir, host, port, dev: values.dev });
   console.log(
-    `ISA Node.js workbench${values.dev ? " · development / Vite hot reload" : ""}\nOpen: ${app.session.url}/#token=${app.session.token}\nLocal data: ${app.store.dir}\nPress Ctrl+C to stop.`,
+    `IRA Node.js workbench${values.dev ? " · development / Vite hot reload" : ""}\nOpen: ${app.session.url}/#token=${app.session.token}\nLocal data: ${app.store.dir}\nPress Ctrl+C to stop.`,
   );
   for (const signal of ["SIGINT", "SIGTERM"] as const)
     process.once(signal, () => {
