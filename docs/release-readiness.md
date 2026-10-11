@@ -18,6 +18,47 @@ Do not require later RC signatures, staging or votes before the preparation PR.
 After merge, verify the actual candidate and execute the release stages; do not
 plan to discover ordinary source requirements in a second preparation round.
 
+## Official authority and common rule map
+
+Use this document as IRA's single checking entry point. The authority for ASF
+compliance remains the linked official documents, not this checklist, a Skill,
+RAT, or releasecheck. Sources below were reviewed on 2026-09-29; recheck applicable
+sections when assessing a later candidate and record the retrieval date.
+
+Distinguish four kinds of basis: ASF/Incubator policy; official guidance
+(preserving its MUST/SHOULD/other wording); a documented project or case-specific
+decision; and IRA execution/evidence rules. Guides explain application, and
+review mail identifies findings or case dispositions. Neither automatically
+creates a universal policy. The Incubation Policy explicitly identifies itself
+as the controlling incubation requirements when incubation documents differ;
+it does not remove applicable ASF-wide legal/release obligations. An apparent
+conflict or proposed exception needs an applicable authoritative disposition.
+
+| Rule ID / scope | Official basis and status | Concrete check / IRA gate |
+| --- | --- | --- |
+| ASF-SOURCE / every release | [ASF Release Policy](https://www.apache.org/legal/release-policy.html): foundation policy | Identify the exact source distribution, source sufficiency, detached signature and release approval; bind checks to its bytes. PREP-01/05/07 and later RC/vote gates |
+| ASF-HEADERS / contributed, third-party and exception files | [Source Header and Copyright Notice Policy](https://www.apache.org/legal/src-headers.html): foundation policy, including its stated exceptions | Classify origin before checking appropriate headers, copyright/NOTICE treatment and grants; include scripts/configuration/docs/tests. PREP-02, AUDIT-01/03 |
+| ASF-LEGAL / each actual distribution | [Third-party License Policy](https://www.apache.org/legal/resolved.html) and [LICENSE/NOTICE how-to](https://infra.apache.org/licensing-howto.html): policy plus implementation guidance | Map actual bundled files to applicable license/attribution obligations and legal-file placement; distinguish external dependencies. PREP-03/04/05, AUDIT-02 |
+| INC-DISCLAIMER / podlings | [Incubation Policy: Disclaimers and Releases](https://incubator.apache.org/policy/incubation.html): incubation policy | Check archive naming, applicable disclaimer content and display surfaces; distinguish standard/WIP routes and their conditions. PREP-03/05/06, AUDIT-04 |
+| INC-APPROVAL / podling ASF releases | [Incubation Policy: Releases](https://incubator.apache.org/policy/incubation.html#releases) and ASF Release Policy: policy | Independently verify project endorsement and binding IPMC approval for the exact candidate; no transfer of old votes to changed bytes. Later vote/publication gates |
+| INC-IDENTITY / each component and channel | [Distribution Guidelines: Release Platforms](https://incubator.apache.org/guides/distribution.html#release-platforms): official SHOULD guidance | Examine the actual package identity, Apache project branding, display disclaimer and platform administration. Record case-specific naming decisions; no universal invented prefix. PREP-05/06, AUDIT-04 |
+| INC-MAVEN / Maven artifacts | [Distribution Guidelines: Maven](https://incubator.apache.org/guides/distribution.html#maven-distribution): official SHOULD guidance | Separately check groupId, description disclaimer, Apache project developer, ALv2 license, SCM and RC marking. Maven inapplicability does not waive INC-IDENTITY elsewhere. PREP-05/06 |
+| INFRA-DIST / staging and public distribution | [Release Distribution Policy](https://infra.apache.org/release-distribution.html): Infra policy; channel detail in Incubator Distribution Guidelines | Check approved versus candidate locations, integrity files, publication triggers and public display; keep unapproved candidates out of ordinary final-release routes. PREP-06, AUDIT-05 and later publication gates |
+| IRA-EVIDENCE / every assessment | This standard and its required record: IRA workflow rule | Reconcile inventory/tool coverage, maintain unresolved findings across handoffs, and require new evidence for pending-to-pass changes. AUDIT-03/06/07 and PREP-08 |
+
+This map indexes the detailed gates below; it is not a replacement or a claim
+that every clause of the linked documents is mechanically implemented. Apply
+the common requirements first, then each ecosystem/channel's additional rules
+and actual project review findings. One channel's not-applicable result cannot
+silently skip another channel's identity or distribution review.
+
+For each finding retain its rule ID, official section and actual wording,
+applicability, candidate file/artifact/hash, observed mismatch, and verified
+remediation or authorized disposition. A SHOULD departure needs investigation
+and any applicable project/IPMC decision; an Agent's compatibility rationale is
+not that decision. Known findings survive checklist revisions and scope
+changes until individually resolved or explicitly retained out of scope.
+
 ## Mandatory evidence and completion claims
 
 This is an IRA Agent workflow requirement for every target language, including
@@ -112,6 +153,16 @@ SHOULD guidance; do not silently force a breaking namespace/version change.
 Track GitHub write/tag, ASF dev staging, ASF release promotion, signing/KEYS,
 and registry administration separately. Never expose secret values in evidence.
 
+For Maven convenience binaries, apply the
+[Maven staging checklist](release-maven-staging.md). Decide source-affecting staging and
+promotion configuration during preparation. Before voting, require the actual
+closed review repository, fresh JAR/POM/signature verification, binary/legal
+review and source correspondence. Local JARs or a source-only ballot do not
+resolve a known binary-review finding. Promote the reviewed Maven originals;
+prevent final-tag workflows from rebuilding or publishing a second set. Nexus,
+Central and ASF distribution permissions are distinct. Cancelled RC votes do
+not transfer to a replacement candidate.
+
 #### Project-specific identity and distribution review
 
 Apply the common gates separately to each Apache project, released component
@@ -132,6 +183,22 @@ process before closing the finding. SHOULD does not mean an Agent can waive it:
 record the concrete rationale, responsible project decision and any required
 IPMC permission. Do not turn this into a claim that all ecosystems must use an
 `apache-` prefix, or rename Java packages merely because the Maven groupId changes.
+
+Review Maven metadata field by field: the description includes the incubation
+disclaimer, the developers include the Apache project, the license identifies
+ALv2, and SCM points to the correct project. A compliant groupId or display name
+does not establish the other fields. Preserve relevant contributor attribution.
+Inspect the source POM and, when available, the flattened/published POM and
+embedded JAR metadata. After a metadata edit, old generated artifacts remain
+historical evidence until regenerated and checked against the new input.
+
+When the IRA repository is available, the optional read-only
+`scripts/check_release_metadata.py` helper checks explicit source Maven/Cargo
+metadata against caller-supplied project identities. Its deterministic regression
+tests are in `scripts/test_release_metadata.py`; usage and limits are documented
+in the repository's `docs/release-metadata-checks.md`. It does not validate the
+reference disclaimer's legal correctness, generated artifacts, ownership,
+builds or prior-finding closure. It adds no Java/Rust release-engine adapter.
 
 For Cargo and other ecosystems, review the package's own identity and applicable
 project/platform rules even when a Maven-specific rule is not applicable. A
@@ -290,6 +357,27 @@ neither a tool's +1 recommendation nor a benchmark score is release approval.
 Do not claim tool installation, integration or reproduction from a mailing-list
 announcement. Human binding-vote build/test duties remain even if a prior vote
 email omitted them. A model evaluation not actually run stays unrun.
+
+When applying a public release-review skill, keep its unmodified findings and
+exit status alongside the Agent's dispositions. Pin the upstream revision and
+record any regression-test failure or local compatibility change separately.
+Name each checker's actual scope: an archive-filename check is not evidence
+that Maven coordinates, Cargo package identity, consumer imports or registry
+control were reviewed. Fill those gaps using the project-specific matrix.
+
+Interpret results against the input stage. Unsigned local preparation archives
+can legitimately lack RC signatures and checksum sidecars; retain those tool
+failures as later-stage requirements, not source defects or reasons to sign
+early. Such inputs cannot establish public RC verification. A zero tool exit
+does not close a known finding or establish build, RAT or legal review.
+
+For retrospective comparisons, disclose already-known reviewer feedback and
+do not describe the run as blind. Record separately what the script detected,
+what the Agent checked, and what came from the review thread. Compare original
+findings with the actual reviewed artifacts before adding new checks; apply
+necessary additions to the current candidate in the same task. The public
+[Incubator releasecheck](https://github.com/apache/incubator/tree/master/tools/skills/releasecheck)
+is one reusable review aid, not a mandatory installation or an ASF approval.
 
 These audit fields capture recurring public review failures discussed in
 September 2026 (Seata, Cloudberry and Fesod) and the release-checker discussion.

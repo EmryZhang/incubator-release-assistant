@@ -1,9 +1,50 @@
 # Release coordination checklist
 
+> JCasbin resumed (2026-10-11): prepare a replacement for the cancelled RC2 with source and Maven review materials, separate staging/promotion and fresh PPMC/IPMC votes. Nexus project mapping and the actual Javadoc distribution need their specific evidence; old source review does not cover binaries. Use the [Maven staging checklist](release-maven-staging.md). [RC2 cancellation](https://lists.apache.org/thread/4cjsgl0qp14d0sb552xlvd1qnjq7dj47) supersedes older JCasbin vote/carry-over claims below. This instruction does not resume other paused components.
+
+> Latest execution checkpoint (2026-10-09): the user stopped today's preparation. TypeORM 1.10.1, async SQLAlchemy 1.18.0 and node-casbin 5.52.0 are incomplete local candidates; JDBC is bypassed for this batch but remains queued. No preparation PR, release tag or publication was made. Outstanding findings, preserved patches and the two verified GitHub status replies are in the [paused urgent-release record](../../docs/release-preflight/2026-10-09/urgent/README.md). No background continuation is scheduled.
+
+> Current coordination (2026-10-09): use the [five-component record](../../docs/release-preflight/2026-10-09/README.md) for the original JCasbin/SQLx/JDBC scope, new TypeORM/async SQLAlchemy pings, dev-to-general IPMC carry-over, and actual dependency order. JDBC has not been cancelled; its old prepared candidate requires coordinate/audit refresh and public resolution of the formally released JCasbin 1.100.0. Multi-component email and concurrent PPMC/IPMC voting are separate organizational choices; each component retains separate evidence, vote tally and approval. Older rows and handoffs below are historical, not current readiness or authorization.
+
+> 2026-09-16: JCasbin RC handoff is blocked by missing incubation text in the merged README/POM/release notes. A local proposal exists, not an adopted source correction. JDBC/SQLx also retain explicit preparation findings. Use parent workspace `docs/release-preflight/2026-09-16/README.md` and its per-project AUDIT records before any batch tagging; earlier handoff tables are historical.
+
+> Latest remediation (2026-09-15): JDBC/SQLx source-side findings are fixed and revalidated. JDBC is at `44410fc332e89cceeb1da348db199bf4d6375914`; SQLx at `22eae2db03c94d1324262ab94414bc472977f833`. Project provenance/copyright and distribution-arrangement records remain pending, so neither is preparation-complete or ready for an RC tag. See parent workspace `docs/release-preflight/2026-09-15/remediation.md`. No PR, push, tag, signing or publication was performed.
+
 This is the one-round confirmation sheet for the Casbin release queue. It is
 deliberately a decision record, not an authorization to tag or publish.
 
-Last public repository review: 2026-08-26.
+Preparation follows [one PR per repository/version](release-preparation.md).
+Collect missing owner decisions together and finish the scoped local checks
+before requesting upstream review. Existing preparation PRs absorb all fixes;
+do not create separate version, dependency and legal PRs for the same release.
+
+Original public repository review: 2026-08-26. Partial refresh: 2026-09-10;
+see [current preparation](release-progress.md#current-preparation--2026-09-10).
+The four SQLx/JDBC/TypeORM/MongoDB source-readiness patches are locally prepared
+and checked; target versions and final candidate commits are still undecided.
+Rows outside the refreshed scope remain historical observations.
+
+2026-09-15 update: the eight previously checked repository HEADs and latest
+observed releases are unchanged. SQLx 1.9.0 and JDBC 2.14.0 are locally committed with passing technical checks; Apache compliance follow-up remains incomplete;
+upstream PR/CI/merge and exact merged candidate verification remain pending;
+their new evidence is summarized in [release progress](release-progress.md#current-preparation--2026-09-15).
+The user wants mature candidates collected for their mentor to create RC
+tags in one batch. Keep versions and exact merged SHAs explicit for each row;
+only JCasbin currently has that candidate evidence. Remaining rows must finish
+their single preparation PR and merged-candidate checks before tag handoff.
+The local handoff table is in the parent workspace at
+`docs/release-preflight/2026-09-15/README.md`. No message has been sent.
+
+JCasbin-only refresh (2026-09-14): preparation [PR #531](https://github.com/apache/casbin-jcasbin/pull/531)
+merged at `3ab35f38b088f32ea3f2285474cc98009945e53d`, with POM `1.100.0`.
+The exact merged commit build passed. Fresh 217-file archives match Git and
+pass RAT without exclusions. The 2026-09-14 independent extraction passed all 266
+tests and three JAR legal-file checks. The source tree equals the previously tested
+`da3b9ba`; #525 remains excluded. No additional preparation PR is identified.
+Current credentials cannot push an upstream tag. The next maintainer action
+is to create `v1.100.0-rc1` at that exact SHA after the release prerequisites
+are checked. No RC has been published. Detailed local evidence and the exact
+handoff command: parent workspace `docs/release-preflight/2026-09-14/casbin-jcasbin.md`.
 
 ## What needs one owner decision
 
@@ -23,14 +64,14 @@ source archive reviewed and voted on before the final `vV` tag/publish step.
 
 ## Observed facts and questions
 
-The first two repositories were assessed earlier and are included below so the
+The first two repositories were assessed earlier; SQLx #113 merge status was refreshed on 2026-09-10. They are included below so the
 release owner can close the whole wave in one response.
 
 | Repository | Public baseline observed | Release-context item | Current publication mechanism | Decision needed from release owner |
 | --- | --- | --- | --- | --- |
-| casbin-sqlx-adapter | latest tag `v1.8.0`; Cargo version `1.8.0` | PR [#113](https://github.com/apache/casbin-sqlx-adapter/pull/113) is closed and unmerged | Manual `vX.Y.Z-rcN` / `vX.Y.Z` tags; final publishes to crates.io | Include or defer? If included, choose `V` and the candidate commit; do not treat #113 as merged. |
+| casbin-sqlx-adapter | latest tag `v1.8.0`; Cargo version `1.8.0` | PR [#113](https://github.com/apache/casbin-sqlx-adapter/pull/113) confirmed merged on 2026-09-10 | Manual `vX.Y.Z-rcN` / `vX.Y.Z` tags; final publishes to crates.io | Include or defer? If included, choose `V` and the candidate commit; include the already-merged #113 change; version remains unselected. |
 | casbin-jcasbin-jdbc-adapter | latest tag `v2.13.0`; root `pom.xml` says `2.6.0` | PR [#95](https://github.com/apache/casbin-jcasbin-jdbc-adapter/pull/95) merged | Manual RC/final tags; final publishes to Maven Central | Confirm `V` (for example, the proposed patch line must be new), and approve a version-preparation PR before selecting the RC commit. |
-| casbin-jcasbin | latest release `v1.99.0`; working POM is `0.0.0-SNAPSHOT`; snapshot tags exist for `v1.100.0` | PR [#525](https://github.com/apache/casbin-jcasbin/pull/525) is open | Manual RC/final tags; final publishes to Maven Central | Is #525 part of this release? Confirm `V`, source-version preparation, and candidate commit. |
+| casbin-jcasbin | latest formal release `v1.99.0`; merged POM `1.100.0` at `3ab35f3`; no `v1.100.0-rc1` observed on 2026-09-14 | Preparation PRs #530 and [#531](https://github.com/apache/casbin-jcasbin/pull/531) merged; #525 excluded | Manual RC/final tags; final publishes to Maven Central | Maintainer to create RC at `3ab35f38b088f32ea3f2285474cc98009945e53d` after prerequisite checks; verify generated files, sign, stage and vote. |
 | casbin-pycasbin | latest release `v2.8.0`; `pyproject.toml` says `2.6.1` | Issue [#424](https://github.com/apache/casbin-pycasbin/issues/424) is closed | Manual RC/final tags; final publishes to PyPI | Confirm the intended fix/commit and `V`; reconcile the package-file/tag version discrepancy in the version PR. |
 | casbin-typeorm-adapter | latest release `v1.10.0`; `package.json` says `0.0.0` | Issue [#81](https://github.com/apache/casbin-typeorm-adapter/issues/81) is closed | Manual RC/final tags; final publishes to npm | Confirm the intended fix/commit and `V`; include package-version preparation. |
 | casbin-mongodb-adapter | latest release `v4.3.0` | PR [#76](https://github.com/apache/casbin-mongodb-adapter/pull/76) merged | Manual RC/final tags; final Go module becomes available through the proxy | Confirm whether the Casbin v3 upgrade is this wave's basis, its compatibility/version bump, and candidate commit. |

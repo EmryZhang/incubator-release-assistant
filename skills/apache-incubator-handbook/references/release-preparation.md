@@ -65,6 +65,13 @@ an unresolved source-affecting decision as "release paperwork" until after
 merge. Resolve known workflow/coordinate requirements before the PR even when
 actual credential use and publication are later steps.
 
+For Maven distribution, apply the [Maven staging checklist](release-maven-staging.md):
+settle the staging/promotion route and known binary/Javadoc legal questions
+before submission when they can change source or contents. Actual signed closed
+repository URLs belong before the vote, not before the preparation PR. Include
+source and Maven review links and the applicable dev ballot/result; replacement
+candidates receive fresh votes rather than inheriting a cancelled RC's tally.
+
 After merge the normal work is candidate verification and release execution,
 not a planned second round of source repairs. This does not guarantee that no
 unexpected problem can ever appear: report any new blocker and its effect,
@@ -121,6 +128,14 @@ Batch related fixes before pushing; do not push each finding just to discover
 the next one in upstream CI. Automated tests and scans do not each require
 user approval. The IRA `prepare` engine still does not execute target code:
 target builds run as separate, appropriately isolated verification work.
+
+If Docker is unavailable, first check for an existing native toolchain and
+disposable local database processes or an already authorized test environment.
+Use separate test data directories and loopback ports, preserve existing
+services, and stop temporary processes after verification. Record the actual
+platform/runtime/TLS/database matrix and consumer/package checks. Do not turn
+a Docker failure into a source defect or automatically skip tests that can run
+without it; do not make unrelated dependency/toolchain changes to force a pass.
 
 Keep dependency review within the selected release. Public affected-version
 matches need assessment, not an unsupported claim of application exploitability.

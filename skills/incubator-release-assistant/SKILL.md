@@ -42,6 +42,7 @@ declaring readiness for the preparation PR; preserve pending later signing,
 vote and publication gates. Revalidate affected evidence when source or
 artifacts change and correct earlier readiness claims if a gap is discovered.
 Follow [the combined preparation workflow](references/release-preparation.md).
+For Maven convenience binaries, use the [staging and replacement-candidate checklist](references/release-maven-staging.md).
 The Agent record is mandatory; it is not new automated legal enforcement in
 the Go engine, and it does not authorize new target languages or add per-check
 confirmation prompts.

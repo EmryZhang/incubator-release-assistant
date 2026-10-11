@@ -14,7 +14,8 @@ does not need to search the web for ordinary incubation questions.
 - For release-readiness claims, read the IRA
   [mandatory evidence standard](references/release-readiness.md),
   [readiness record](references/release-readiness-record.md), and
-  [preparation workflow](references/release-preparation.md). Missing or
+  [preparation workflow](references/release-preparation.md), and the
+  [Maven staging checklist](references/release-maven-staging.md) when applicable. Missing or
   unresolved evidence cannot pass. Distinguish applicable ASF obligations from
   guidance and IRA workflow requirements; technical success is not legal or
   vote approval.

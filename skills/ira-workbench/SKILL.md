@@ -82,6 +82,7 @@ blocker needs an explicit scope decision before any second PR; do not create
 one automatically. Preserve exclusions and existing authorization, and avoid
 per-check confirmation prompts. A PR does not replace GitHub run approvals or
 ASF votes. See [preparation workflow](references/release-preparation.md).
+For Maven convenience binaries, use the [staging and replacement-candidate checklist](references/release-maven-staging.md).
 
 1. Read the task command displayed under **Agent 与改动 → 交给 Agent**:
 

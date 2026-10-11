@@ -16,7 +16,7 @@ Copy-Item -LiteralPath (Join-Path $root "config\examples\casbin-release-queue.js
 foreach ($skillName in @("incubator-release-assistant", "ira-workbench", "apache-incubator-handbook")) {
     $references = Join-Path $root "skills\$skillName\references"
     New-Item -ItemType Directory -Path $references -Force | Out-Null
-    foreach ($policyFile in @("release-readiness.md", "release-readiness-record.md", "release-preparation.md")) {
+    foreach ($policyFile in @("release-readiness.md", "release-readiness-record.md", "release-preparation.md", "release-maven-staging.md")) {
         Copy-Item -LiteralPath (Join-Path $root "docs\$policyFile") `
             -Destination (Join-Path $references $policyFile) -Force
     }

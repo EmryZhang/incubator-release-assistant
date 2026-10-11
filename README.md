@@ -104,6 +104,8 @@ evidence prevents a preparation-complete claim, even when build/RAT/advisory
 checks pass. These are Agent workflow requirements; the current engine and
 workbench do not automatically decide legal compliance.
 
+For Maven convenience binaries, also follow the [staging checklist](docs/release-maven-staging.md).
+
 Passing target-project CI is necessary evidence for a selected commit; it is
 not release approval. Every RC must additionally undergo RAT on the final
 source archive, a human review of `LICENSE`, `NOTICE`, `DISCLAIMER`, third-party

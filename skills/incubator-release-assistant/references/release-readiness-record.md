@@ -13,10 +13,27 @@ Keep evidence links sanitized; never include credentials or private mail.
 - Included scope / explicit exclusions:
 - Review date / reviewer identity and role (Agent, automated, or named human):
 - Policy sources checked and date:
+- Metadata checker (if used): revision/hash, explicit expected identities, per-file report hashes and coverage limits; findings reconciled separately:
+- Non-Docker test alternatives checked, disposable service isolation/cleanup, actual matrix and remaining unverified checks:
 - Current stage claim: **preparation incomplete**
 - Remaining findings / next action:
 - First-PR boundary: all known source-affecting decisions/changes and newly added audits resolved, with evidence:
 - Later-stage prerequisites still pending (distinct from source changes):
+
+## Official-rule applicability and evidence
+
+Use the [common rule map](release-readiness.md#official-authority-and-common-rule-map)
+as the source index. Record each applicable rule and every known review finding;
+do not treat a checker's absence of findings as a policy result. Preserve the
+official wording/strength separately from IRA's decision to keep a gate open.
+
+| Rule ID / official URL and section / checked date | Basis kind and wording (policy, SHOULD guidance, case decision, IRA rule) | Project/component/channel and applicability | Exact file/artifact/hash and observed result | State / finding ID / verified disposition or next owner/action |
+| --- | --- | --- | --- | --- |
+| Not yet assessed | | | | pending |
+
+When reusing or superseding a record, reconcile each earlier finding ID. State
+what new evidence justifies closure; an omitted row, unchanged legacy code,
+general permission to proceed or successful unrelated check is not closure.
 
 ## Preparation gates — initially pending, never inferred from tool success
 
@@ -79,6 +96,21 @@ Do not delete a row or substitute a general "all checks passed" statement.
 | AUDIT-06 | pending | Public prior/current RC review threads, queries/time/coverage; each applicable finding mapped to verified current disposition, not a promise |
 | AUDIT-07 | pending | Actual checker/tool version, commands/inputs/outputs and unavailable coverage; deterministic/Agent/human distinctions; actual build/test and outstanding reviewer duties |
 
+For Maven, record separate results for groupId/artifactId, description's full
+incubation disclaimer, Apache project developer entry, ALv2 license and SCM.
+Identify whether each result comes from the source, flattened/published POM or
+embedded metadata. Mark generated-artifact results stale when the input changes;
+an old build is not verification of a newly edited POM.
+
+For a public checker/skill run, attach the upstream revision, input stage and
+archive hashes, exact commands, raw report/exit status, regression result and
+any local compatibility change. Record raw finding -> verified disposition ->
+affected PREP gate, distinguishing missing later-stage sidecars from source
+defects. Explicitly list coverage gaps (including package identity, build/RAT
+and registry control) and their separate evidence. For a historical replay,
+disclose prior knowledge and distinguish script hits, Agent additions and
+reviewer-originated findings; never label a non-blind run as a blind evaluation.
+
 Public review finding trace (use an evidenced not-applicable reason if none):
 
 | Original public message / date / candidate | Finding and evidence type | Current affected files/artifacts | Verified fix or disposition / evidence | State / owner / next action |
@@ -125,6 +157,24 @@ supplemental RAT classifications separately from manual exception reviews.
 | Applicable project/IPMC votes, binding roles and results | pending | |
 | Approved originals promoted and public distribution verified | pending | |
 | Download pages, announcement and closeout | pending | |
+
+### Maven review repository, when applicable
+
+| Evidence | State | Exact candidate binding, result, owner and limits |
+| --- | --- | --- |
+| Staging/promotion route and source-affecting POM/workflow decisions | pending | |
+| Actual profile/groupId mapping and deployment permission, distinct from Central | pending | |
+| Main/sources/Javadoc JAR and flattened POM inventory, GAV and legal/resource review | pending | |
+| Named human review of these binaries, distinct from source review | pending | |
+| Signed closed repository ID/state/URL; fresh public downloads and manifest comparison | pending | |
+| Dev ballot/result links, replacement findings and fresh vote records | pending | |
+| Post-approval promotion of reviewed Maven originals; no duplicate rebuild/publication | pending | |
+
+Mark rows not-applicable with evidence for projects without this channel. Route
+and known source-affecting decisions are preparation work; upload, signing,
+close, URLs and votes are later evidence. Login, another visible profile or
+anonymous 401 does not establish this project's deployment permission. See
+the [Maven staging checklist](release-maven-staging.md) for sources and the case.
 
 Later gates may legitimately remain pending when preparing a PR. They must
 remain visible; never convert them to passed because preparation, tagging or

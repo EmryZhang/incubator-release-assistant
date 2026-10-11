@@ -15,7 +15,7 @@ $pairs = @(
 # Canonical policy is maintained in docs; installed skills must carry it too.
 foreach ($skillName in @("incubator-release-assistant", "ira-workbench", "apache-incubator-handbook")) {
     $skillEntry = Get-Content -LiteralPath (Join-Path $root "skills\$skillName\SKILL.md") -Raw
-    foreach ($policyFile in @("release-readiness.md", "release-readiness-record.md", "release-preparation.md")) {
+    foreach ($policyFile in @("release-readiness.md", "release-readiness-record.md", "release-preparation.md", "release-maven-staging.md")) {
         $pairs += ,@((Join-Path $root "docs\$policyFile"), (Join-Path $root "skills\$skillName\references\$policyFile"))
         if ($skillEntry -notmatch [regex]::Escape("references/$policyFile")) {
             throw "Skill $skillName does not route to required readiness resource: $policyFile"
