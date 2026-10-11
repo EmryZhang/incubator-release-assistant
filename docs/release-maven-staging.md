@@ -18,13 +18,19 @@ change POMs, workflows or distribution contents. Separate upload/close from
 release/promotion. Trace final tags, manual/reusable workflows and retries so
 they cannot publish an unapproved candidate, rebuild different binaries after
 review or duplicate publication. Promote the reviewed Maven originals. Never
-run a real deploy as a settings test.
+run a real deploy as a settings test. Audit any newly introduced staging tool
+and its actual dependency realm; a Nexus-specific extension is not mandatory
+for the ordinary Maven deploy and manual close/promote route.
 
 For ASF Nexus, verify that the actual profile covers the groupId, its LDAP
 mapping and the release manager's deployment permission. ASF login, another
 visible profile and Central Portal permission do not establish Nexus permission.
 Anonymous HTTP 401 does not prove a profile is absent. Ask Infra to check
-existing configuration before creating a duplicate. Keep credentials outside
+existing configuration before creating a duplicate. INFRA Jira tickets require
+authentication to read/comment; an anonymous search error is not evidence that
+no request exists. Prepare the project URL, source repository, groupIds and
+responsible PMC for the official setup request; Infra configures LDAP mapping.
+Keep credentials outside
 Git/evidence; this route uses server ID `apache.releases.https`.
 
 Local preparation can pass before a real staging repository exists. Resolve
@@ -68,6 +74,7 @@ consumer resolution afterward. Close is review preparation, not publication.
 ## Basis and public case
 
 - [ASF Maven guide](https://infra.apache.org/publishing-maven-artifacts.html): profile/LDAP setup, signing, close/vote/promote and podling IPMC approval.
+- [Infra Jira guidelines](https://infra.apache.org/jira-guidelines): authenticated INFRA search and setup-request access.
 - [ASF release policy](https://www.apache.org/legal/release-policy.html): source, binary correspondence, signing and approval.
 - [Incubation Policy](https://incubator.apache.org/policy/incubation.html#releases): distinct project/IPMC approval and sequential or concurrent voting.
 - [Third-party license policy](https://www.apache.org/legal/resolved.html#javadoc): actual documentation resources and their permissions.
