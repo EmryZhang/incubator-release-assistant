@@ -41,6 +41,34 @@ process exception; do not silently open another preparation PR or push directly.
 
 ## Before voting
 
+### Generated documentation and preserved Maven files
+
+Check a proposed documentation fix on actual output before handing it to the
+project. A separate OpenJDK Javadoc tool can preserve the library's older Java
+runtime baseline. Record both toolchains, inspect all copied scripts, styles,
+images and fonts, and map their actual versions to complete bundled license
+texts. Missing headers or the Java9 wording of the ASF Javadoc FAQ alone do
+not establish that Java8 output is prohibited. A replacement tool's license
+does not retroactively license old resources. Existing policy and evidence
+normally support project review without a separate IPMC signoff per file.
+
+Wire the reviewed documentation configuration into the candidate build and CI;
+do not leave it as a successful local experiment while release commands still
+produce old output. Fail locally on the wrong doclet, missing license files,
+unknown bundled resources or incompatible main-library bytecode. When pinning
+an SDK in setup-java, use the vendor's actual SemVer identifier: it may differ
+from the JDK release tag or four-part runtime version. Preserve raw RAT findings
+for legal documents with their full source/hash dispositions rather than
+adding ASF headers to third-party license texts or hiding source exclusions.
+
+After reviewing and signing Maven files, upload those existing bytes with a
+pinned deploy-file goal instead of rebuilding them through the deploy lifecycle.
+Include main/sources/Javadoc JARs, their exact flattened POM and all four
+signatures. Test attachment classifiers/types and unchanged hashes in an
+isolated local file repository first. Non-signature probe attachments only
+verify layout/transport; they do not test PGP validity, ASF credentials,
+release staging, close or promotion. Keep SHA512 evidence separate from Nexus.
+
 Stage signed source originals in ASF dev distribution. Upload Maven artifacts
 to the selected review repository and close it without releasing it. ASF Nexus
 does not accept SHA-256/SHA-512 sidecars; retain SHA-512 in the evidence manifest
